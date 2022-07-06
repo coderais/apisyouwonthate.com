@@ -207,7 +207,7 @@ module.exports = [
   {
     source: '/the-many-amazing-uses-of-json-schema-client-side-validation-:id',
     destination:
-      '/blog/the-many-amazing-uses-of-json-schema-client-side-validation',
+      '/blog/json-schema-client-side-validation',
     permanent: true,
   },
   {
@@ -250,7 +250,18 @@ module.exports = [
   },
   {
     source: '/blog/openapi-v31-and-json-schema-2019-09',
-    destination: '/blog/openapi-v31-and-json-schema',
+    destination: '/blog/openapi-v3-1-and-json-schema',
+    permanent: true,
+  },
+  {
+    source: '/blog/openapi-v31-and-json-schema',
+    destination: '/blog/openapi-v3-1-and-json-schema',
+    permanent: true,
+  },
+  {
+    source: '/blog/the-many-amazing-uses-of-json-schema-client-side-validation',
+    destination:
+      '/blog/json-schema-client-side-validation',
     permanent: true,
   },
   {
