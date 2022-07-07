@@ -7,17 +7,43 @@ type: blog
 author: Phil Sturgeon
 ---
 
-At some point in the growth of an organization there will come a time where you've got too many different APIs with random different data formats, naming conventions, security schemes, and generally it feels bizarre and frustrating trying to call any API because you cannot share any code between API consumers. If you're not there right now, good, you're reading this in time. If you're already there, yeah it sucks doesn't it, and this article will help you work your way out of that pit over time. 
+At some point in the growth of an organization there will come a time where
+you've got too many different APIs with random different data formats, naming
+conventions, security schemes, and generally it feels bizarre and frustrating
+trying to call any API because you cannot share any code between API consumers.
+If you're not there right now, good, you're reading this in time. If you're
+already there, yeah it sucks doesn't it, and this article will help you work
+your way out of that pit over time. 
 
-API Style Guides have always been a crucial part of API Governance, but they usually come in the form of a giant manifesto, written by the most ~~opinionated~~ experienced person at your organization. Often they're ignored, and when they are read it's impossible to remember all the decisions, especially as some may change over time. Now [API style guides can be automated](/blog/automated-style-guides-for-rest-graphql-grpc), and if you're describing APIs with [OpenAPI](https://apisyouwonthate.com/blog/theres-no-reason-to-write-openapi-by-hand) you can use excellent tools like [Stoplight Spectral](https://github.com/stoplightio/spectral/), which is the natural successor to the previously popular [Speccy](https://github.com/wework/speccy) (a tool I built at WeWork but was promptly abandoned when I left).
+API Style Guides have always been a crucial part of API Governance, but they
+usually come in the form of a giant manifesto, written by the most
+~~opinionated~~ experienced person at your organization. Often they're ignored,
+and when they are read it's impossible to remember all the decisions, especially
+as some may change over time. Now [API style guides can be
+automated](/blog/automated-style-guides-for-rest-graphql-grpc), and if you're
+describing APIs with
+[OpenAPI](https://apisyouwonthate.com/blog/theres-no-reason-to-write-openapi-by-hand)
+you can use excellent tools like [Stoplight
+Spectral](https://github.com/stoplightio/spectral/), which is the natural
+successor to the previously popular [Speccy](https://github.com/wework/speccy)
+(a tool I built at WeWork but was promptly abandoned when I left).
 
-Both tools let you define all the rules you need for your API Style Guide in YAML or JSON, and distribute them via publicly via URLs, or smush them into the filesystem somehow, but Spectral offers a fantastically powerful new way of building and distributing your style guides: you can build them in JavaScript, write tests for the rules, use whatever libraries you feel like, and distribute via NPM so that you can version your API Style Guides.
+Both tools let you define all the rules you need for your API Style Guide in
+YAML or JSON, and distribute them via publicly via URLs, or smush them into the
+filesystem somehow, but Spectral offers a fantastically powerful new way of
+building and distributing your style guides: you can build them in JavaScript,
+write tests for the rules, use whatever libraries you feel like, and distribute
+via NPM so that you can version your API Style Guides.
 
-To demonstrate I've created the [APIs You Won't Hate: Style Guide](https://github.com/apisyouwonthate/style-guide), which will help everyone make their APIs better using tips we've been sharing on this blog and in the books for the last decade.
+To demonstrate I've created the [APIs You Won't Hate: Style
+Guide](https://github.com/apisyouwonthate/style-guide), which will help everyone
+make their APIs better using tips we've been sharing on this blog and in the
+books for the last decade.
 
 ## Create an API Style Guide in JavaScript 
 
-Let's use the JavaScript format for the ruleset instead of the JSON or YAML formats that people have traditionally used when working with Spectral. 
+Let's use the JavaScript format for the ruleset instead of the JSON or YAML
+formats that people have traditionally used when working with Spectral. 
 
 ```
 mkdir style-guide
@@ -31,10 +57,12 @@ npm install @stoplight/spectral-functions
 npm install @stoplight/spectral-formats
 ```
 
-If you use Spectral already, you may be familiar with the core functions and core formats it bundles with, if not we'll get into that in a moment.
+If you use Spectral already, you may be familiar with the core functions and
+core formats it bundles with, if not we'll get into that in a moment.
 
 
-Create a JS file that will hold your ruleset, possibly called ruleset.js or spectral.js, whatever you feel like calling it.
+Create a JS file that will hold your ruleset, possibly called ruleset.js or
+spectral.js, whatever you feel like calling it.
 
 ```shell
 touch ruleset.js
@@ -53,7 +81,11 @@ export default {
 }
 ```
 
-This is a bit more bootstrapping than if you just start writing random YAML into a file, but seeing as it's just plain old JavaScript you get all the benefits of working in your favourite IDE, which means type hinting, auto-complete, it'll let you know if your function is invalid, and you can import your own functions to power whatever rules you can image.
+This is a bit more bootstrapping than if you just start writing random YAML into
+a file, but seeing as it's just plain old JavaScript you get all the benefits of
+working in your favourite IDE, which means type hinting, auto-complete, it'll
+let you know if your function is invalid, and you can import your own functions
+to power whatever rules you can image.
 
 Let's make some rules.
 
@@ -105,23 +137,41 @@ export default {
 };
 ```
 
-The format of these rules might look familiar to anyone used to create rulesets in JSON/YAML, it's just the JavaScript version. Functions are actually referenced as functions instead of string names for functions, which removes a lot of the confusion around where custom functions live and how they're used. Shove some callbacks in. It's JavaScript afterall! 
+The format of these rules might look familiar to anyone used to create rulesets
+in JSON/YAML, it's just the JavaScript version. Functions are actually
+referenced as functions instead of string names for functions, which removes a
+lot of the confusion around where custom functions live and how they're used.
+Shove some callbacks in. It's JavaScript afterall! 
 
-These rules are making sure you have something showing on your API "root route" `https://example.com/api/`, making sure it's got a `GET` defined (consider using [IETF Draft DRFC: Home Documents for HTTP APIs](https://datatracker.ietf.org/doc/html/draft-nottingham-json-home)), and you're [not using global versioning which is a giant paid in the ass](https://apisyouwonthate.com/blog/api-evolution-for-rest-http-apis). Your milage may vary, but that's the point of writing your own style guide. This is mine. 
+These rules are making sure you have something showing on your API "root route"
+`https://example.com/api/`, making sure it's got a `GET` defined (consider using
+[IETF Draft DRFC: Home Documents for HTTP
+APIs](https://datatracker.ietf.org/doc/html/draft-nottingham-json-home)), and
+you're [not using global versioning which is a giant paid in the
+ass](https://apisyouwonthate.com/blog/api-evolution-for-rest-http-apis). Your
+milage may vary, but that's the point of writing your own style guide. This is
+mine. 
 
-There's loads of other rules in there which you can feel free to copy and paste into a ruleset for your API Style Guide. Head over to https://github.com/apisyouwonthate/style-guide/blob/main/styleguide.js and have a root around to see if you want any, just make sure you are attributing the content (I'd have used the [DBAD license](http://dbad-license.org/) if I didn't think I was gonna get moaned at about it). 
+There's loads of other rules in there which you can feel free to copy and paste
+into a ruleset for your API Style Guide. Head over to
+https://github.com/apisyouwonthate/style-guide/blob/main/styleguide.js and have
+a root around to see if you want any, just make sure you are attributing the
+content (I'd have used the [DBAD license](http://dbad-license.org/) if I didn't
+think I was gonna get moaned at about it). 
 
 
 
 ## Publish your spectral style guide to NPM
 
-Before I can publish to the NPM public repository I'll need to create a `package.json` that contains a few specific options.
+Before I can publish to the NPM public repository I'll need to create a
+`package.json` that contains a few specific options.
 
 ```
 npm init
 ``` 
 
-This will ask a whole bunch of questions via CLI prompts, and you can answer them a little something like this:
+This will ask a whole bunch of questions via CLI prompts, and you can answer
+them a little something like this:
 
 ```
 package name: (style-guide) @apisyouwonthate/style-guide
@@ -135,25 +185,34 @@ author: Phil Sturgeon <phil@apisyouwonthate.com>
 license: (ISC) MIT
 ```
 
-With that `package.json` created, the next step is to grab the dependencies we know it'll need. 
+With that `package.json` created, the next step is to grab the dependencies we
+know it'll need. 
 
 ```shell
 npm install --save @stoplight/spectral-functions
 npm install --save @stoplight/spectral-formats
 ```
 
-Time to yeet this up to the public NPM repository so _everyone_ can use it in all their APIs, and as a basis for their own organization-wide API Style Guides! Read the full documentation on how to [publish modules to NPM](https://docs.npmjs.com/creating-and-publishing-scoped-public-packages) (and you'll need an account, etc)
+Time to yeet this up to the public NPM repository so _everyone_ can use it in
+all their APIs, and as a basis for their own organization-wide API Style Guides!
+Read the full documentation on how to [publish modules to
+NPM](https://docs.npmjs.com/creating-and-publishing-scoped-public-packages) (and
+you'll need an account, etc)
 
 ```shell
 npm login
 npm publish --access public
 ```
 
-If that's worked, you'll be able to see it up on NPM. My package is up on NPM [over here](https://www.npmjs.com/package/@apisyouwonthate/style-guide).
+If that's worked, you'll be able to see it up on NPM. My package is up on NPM
+[over here](https://www.npmjs.com/package/@apisyouwonthate/style-guide).
 
 ## Using an NPM published package
 
-Using a package that's been published to NPM works the same as any using other Spectral ruleset. In your local working directory, Stoplight Project, or wherever your OpenAPI lives, grab Spectral and tell it what rulesets you want to use.
+Using a package that's been published to NPM works the same as any using other
+Spectral ruleset. In your local working directory, Stoplight Project, or
+wherever your OpenAPI lives, grab Spectral and tell it what rulesets you want to
+use.
 
 ```shell
 cd ~/src/<your-api>
@@ -165,7 +224,10 @@ npm install --save -D @apisyouwonthate/style-guide
 echo 'extends: ["@apisyouwonthate/style-guide"]' > .spectral.yaml
 ```
 
-Now when you run `spectral lint openapi.yaml` you'll get all my opinions being shouted at your API, and if you're using API Design First maybe it will help you avoid wasting time writing a bunch of code that you'll just have to change later. 
+Now when you run `spectral lint openapi.yaml` you'll get all my opinions being
+shouted at your API, and if you're using API Design First maybe it will help you
+avoid wasting time writing a bunch of code that you'll just have to change
+later. 
 
 ```
 /Users/phil/src/protect-earth-api/api/openapi.yaml
@@ -180,23 +242,54 @@ Thanks for making Phil's API better, Phil!
 
 ## Using NPM Rulesets in Stoplight Studio & Platform
 
-These NPM-based API Style Guides can be used outside of the CLI too, using something like Unpkg.
+These NPM-based API Style Guides can be used outside of the CLI too, using
+something like Unpkg.
 
 ```yaml
 extends:
   - https://unpkg.com/@apisyouwonthate/style-guide@1.1/ruleset.js
 ```
 
-This pulls in the ruleset and will work on Stoplight Studio (both Desktop and Platform).
+This pulls in the ruleset and will work on Stoplight Studio (both Desktop and
+Platform).
 
-Looking at this, you might be wondering about versioning, and that naturally brings up the question of testing. 
+Looking at this, you might be wondering about versioning, and that naturally
+brings up the question of testing. 
 
 Both possible, and both better off as their own blog post.
 
+## Other API Style Guides & Rulesets
+
+More and more companies and organizations are publishing their API Style Guides
+as Spectral rulesets, so I've been putting them together in a [simple little
+repo](https://github.com/stoplightio/spectral-rulesets) which will one day
+become a "marketplace". 
+
+Here are some of the best: 
+
+- [Adidas](https://github.com/adidas/api-guidelines/blob/master/.spectral.yml)
+- [Box](https://github.com/box/box-openapi/blob/main/.spectral.yml)
+- [DigitalOcean](https://github.com/digitalocean/openapi/blob/main/spectral/ruleset.yml)
+- [Team Digitale](https://github.com/teamdigitale/api-openapi-samples/blob/master/.spectral.yml)
+
+Use these rules as a basis for your style guides, and make sure your APIs are
+useful before you waste time building something rubbish.
+
 ## Host API Style Guides on Stoplight
 
-If mucking around with NPM isn't up your alley, as always Stoplight have a convenient hosted solution you can use that requires a bit less duct-tape and string.
+If mucking around with NPM isn't up your alley, as always Stoplight have a
+convenient hosted solution you can use that requires a bit less duct-tape and
+string.
 
-Create a [Style Guide Project](https://meta.stoplight.io/docs/platform/71b92b2b5e388-style-guide-overview) on Platform, then you can build and share a ruleset in a GUI experience instead of writing JavaScript. You can even [import your existing Spectral rulesets](https://meta.stoplight.io/docs/platform/364e30f79daa0-create-a-style-guide#imported-style-guides) to be a Style Guide Project, and leave your awkward JSON/YAML rulesets behind for good. 
+Create a [Style Guide
+Project](https://meta.stoplight.io/docs/platform/71b92b2b5e388-style-guide-overview)
+on Platform, then you can build and share a ruleset in a GUI experience instead
+of writing JavaScript. You can even [import your existing Spectral
+rulesets](https://meta.stoplight.io/docs/platform/364e30f79daa0-create-a-style-guide#imported-style-guides)
+to be a Style Guide Project, and leave your awkward JSON/YAML rulesets behind
+for good. 
 
-Either way, all the APIs at your organization can use these style guides to get feedback as people are designing their APIs, improving API Governance, and wasting less time worrying about small fry so you can talk about far bigger and more important things in your API Design Review sessions.
+Either way, all the APIs at your organization can use these style guides to get
+feedback as people are designing their APIs, improving API Governance, and
+wasting less time worrying about small fry so you can talk about far bigger and
+more important things in your API Design Review sessions.
