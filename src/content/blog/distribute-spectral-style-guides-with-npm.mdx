@@ -57,8 +57,8 @@ npm install @stoplight/spectral-functions
 npm install @stoplight/spectral-formats
 ```
 
-If you use Spectral already, you may be familiar with the core functions and
-core formats it bundles with, if not we'll get into that in a moment.
+If you use Spectral already, you may be familiar with the [core functions](https://meta.stoplight.io/docs/spectral/ZG9jOjExNg-core-functions) and
+[core formats](https://meta.stoplight.io/docs/spectral/4dec24461f3af-open-api-rules) it bundles with. Don't worry if not, we'll get into that in a moment.
 
 
 Create a JS file that will hold your ruleset, possibly called ruleset.js or
@@ -137,7 +137,8 @@ export default {
 };
 ```
 
-The format of these rules might look familiar to anyone used to create rulesets
+The format of these rules might look familiar to anyone used to [creating
+rulesets](https://meta.stoplight.io/docs/spectral/e5b9616d6d50c-custom-rulesets)
 in JSON/YAML, it's just the JavaScript version. Functions are actually
 referenced as functions instead of string names for functions, which removes a
 lot of the confusion around where custom functions live and how they're used.
@@ -161,12 +162,12 @@ think I was gonna get moaned at about it).
 
 
 
-## Publish your spectral style guide to NPM
+## Publish Your Spectral Ruleset to NPM
 
 Before I can publish to the NPM public repository I'll need to create a
 `package.json` that contains a few specific options.
 
-```
+```shell
 npm init
 ``` 
 
