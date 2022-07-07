@@ -119,6 +119,33 @@ export default {
       severity: 'warn',
     },
 
+    // Author: Phil Sturgeon (https://github.com/philsturgeon)
+    'no-numeric-ids': {
+      description: 'Please avoid exposing IDs as an integer, UUIDs are preferred.',
+      given: '$.paths..parameters[*].[?(@property === "name" && (@ === "id" || @.match(/(_id|Id)$/)))]^.schema',
+      then: {
+        function: schema,
+        functionOptions: {
+          schema: {
+            type: "object",
+            not: {
+              properties: {
+                type: {
+                  const: "integer"
+                }
+              }
+            },
+            properties: {
+              format: {
+                const: 'uuid'
+              }
+            }
+          }
+        }
+      },
+      severity: 'error',
+    },
+    
     // Author: Nauman Ali (https://github.com/naumanali-stoplight)
     'no-global-versioning': {
       description: 'Using global versions just forces all your clients to do a lot more work for each upgrade. Please consider using API Evolution instead.',
@@ -151,7 +178,9 @@ APIs](https://datatracker.ietf.org/doc/html/draft-nottingham-json-home)), and
 you're [not using global versioning which is a giant paid in the
 ass](https://apisyouwonthate.com/blog/api-evolution-for-rest-http-apis). Your
 milage may vary, but that's the point of writing your own style guide. This is
-mine. 
+mine. There's also a rule in there pointing out that using auto incrementing IDs
+in an API are generally [a pretty bad
+idea](https://phil.tech/2015/auto-incrementing-to-destruction/).
 
 There's loads of other rules in there which you can feel free to copy and paste
 into a ruleset for your API Style Guide. Head over to
