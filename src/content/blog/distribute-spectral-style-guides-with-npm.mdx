@@ -211,8 +211,8 @@ If that's worked, you'll be able to see it up on NPM. My package is up on NPM
 ## Using an NPM published package
 
 Using a package that's been published to NPM works the same as any using other
-Spectral ruleset. In your local working directory, Stoplight Project, or
-wherever your OpenAPI lives, grab Spectral and tell it what rulesets you want to
+Spectral ruleset. IIf you're working with Spectral somewhere you can install an NPM module (e.g.: [Spectral CLI](https://meta.stoplight.io/docs/spectral/ZG9jOjI1MTg1-spectral-cli) or [Spectral JS](https://meta.stoplight.io/docs/spectral/eb68e7afd463e-spectral-in-java-script))
+you can install the package with NPM in the CLI and point Spectral to the rulesets you want to
 use.
 
 ```shell
@@ -243,21 +243,20 @@ Thanks for making Phil's API better, Phil!
 
 ## Using NPM Rulesets in Stoplight Studio & Platform
 
-These NPM-based API Style Guides can be used outside of the CLI too, using
-something like Unpkg.
+If you're using Stoplight Platform, Stoplight Studio Desktop, VSCode Spectral, etc. then you can still use the NPM-based API Style Guides, but as there's no way to get NPM involved you can load it with this _One Amazing Trick Doctors Don't Want You To Know About_.
 
 ```yaml
 extends:
   - https://unpkg.com/@apisyouwonthate/style-guide@1.1/ruleset.js
 ```
 
-This pulls in the ruleset and will work on Stoplight Studio (both Desktop and
-Platform).
+Using Unpkg or similar means you can load the ruleset with whatever version
+specificity you want (`@1`, `@1.1`, `@1.1.2`) and it'll work anywhere that
+Spectral does.
 
 Looking at this, you might be wondering about versioning, and that naturally
-brings up the question of testing. 
-
-Both possible, and both better off as their own blog post.
+brings up the question of testing. Both possible, and both better off as their
+own blog post.
 
 ## Other API Style Guides & Rulesets
 
