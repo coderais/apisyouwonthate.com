@@ -13,6 +13,7 @@ import {
   Box,
   Heading,
   Link,
+  ListItem,
   OrderedList,
   SimpleGrid,
   Text,
@@ -143,16 +144,10 @@ const NextOptimizedImage = (props) => {
   );
 };
 
-const UnorderedListComponent = ({ children, ...rest }) => (
-  <UnorderedList {...rest} stylePosition={'outside'} ml="1rem" mb="1rem">
+const ListItemComponent = ({ children, ...rest }) => (
+  <ListItem {...rest} ml="1.25rem">
     {children}
-  </UnorderedList>
-);
-
-const OrderedListComponent = ({ children, ...rest }) => (
-  <OrderedList {...rest} stylePosition={'outside'} ml="1rem" mb="1rem">
-    bois{children}
-  </OrderedList>
+  </ListItem>
 );
 
 const components = {
@@ -160,8 +155,8 @@ const components = {
   Highlight,
   img: NextOptimizedImage,
   inlineCode: InlineCode,
-  ol: OrderedListComponent,
-  ul: UnorderedListComponent,
+  ol: OrderedList,
+  ul: UnorderedList,
   a: CustomLink,
   h1: H1,
   h2: H2,
