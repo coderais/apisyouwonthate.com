@@ -243,6 +243,11 @@ module.exports = [
 
   // Renamed Articles
   {
+    source: '/blog/automated-style-guides-for-rest-graphql-and-grpc',
+    destination: '/blog/automated-style-guides-for-rest-graphql-grpc',
+    permanent: true,
+  },
+  {
     source: '/blog/json-api-openapi-and-json-schema-working-in-harmony',
     destination: '/blog/json-api-openapi-and-json-schema',
     permanent: true,

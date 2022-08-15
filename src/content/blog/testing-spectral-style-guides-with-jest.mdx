@@ -1,0 +1,299 @@
+---
+title: Testing Spectral Style Guides with Jest
+subtitle: Make sure your automated API style guide actually works, and doesn't break as you improve it over time.
+date: "2022-08-15"
+coverImage: testing-spectral-style-guides-with-jest/cover.png
+type: blog
+author: Phil Sturgeon
+---
+
+Readers of this blog will be familiar with the concept of [Automating API style guides](/blog/automated-style-guides-for-rest-graphql-grpc) implemented with programable API linters like [Spectral](https://github.com/stoplightio/spectral/). When combined with the power of [API Design-First](https://apisyouwonthate.com/blog/api-design-first-vs-code-first), these API style guides can power the core of your API design reviews, improving consistency and reducing the frequency of bikeshedding, rewrites, and security issues. As the rulesets that power these API style guides are getting increasingly powerful, and they're being deployed at bigger organizations, it might make sense to add some test coverage to them to make sure they actually work, right?
+
+In the last article we talked about distributing an API style guide as a Spectral ruleset via NPM, which is a great solution for the techies. For the less technical (or non-Node savvy) there are loads of other ways to distribute and manage your Spectral rulesets, including the new "Style Guide Projects" from Stoplight, which give you a shiny GUI editor on top of the same Spectral engine. 
+
+For this article we'll pick up where we left off with the [APIs You Won't Hate: Style Guide](https://github.com/apisyouwonthate/style-guide), which was written as an NPM module _with no tests_ 😱.
+
+Before getting started I thought I'd google around to see what the community was up to, and I found [Test-Driven Development for Spectral with Jest](https://www.jvt.me/posts/2021/12/22/spectral-jest/). The idea was great, but the implementation felt like it could be improved. I decided to go for something closer to what Spectral does to test its core OpenAPI and AsynAPI rulesets. A little core package reuse, and a little copy paste, and I have Jest test suite  I am quite pleased with. 
+
+## 1.) Declaring Dependencies
+
+We'll be using Jest, and as I'm using TypeScript theres a few other packages to grab.
+
+```shell
+npm install -d --save jest ts-jest @types/jest
+```
+
+The ruleset we created in [Distribute Spectral Style Guides with NPM](https://apisyouwonthate.com/blog/distribute-spectral-style-guides-with-npm#publish-your-spectral-style-guide-to-npm) was already using the following two packages, but for those following along at home lets make sure we've mentioned this:
+
+
+```shell
+npm install --save @stoplight/spectral-formats
+npm install --save @stoplight/spectral-functions
+```
+
+Finally, because I switched to TypeScript since the last article, we'll need to grab a package full of various types Stoplight uses across multiple packages.
+
+```shell
+npm install --save @stoplight/types
+```
+
+Now lets put these dependencies to work.
+
+## 2.) Adding Test Helpers 
+
+Lets make a folder for our tests, and pop a helper in there to make them work.
+
+```
+mkdir -p __tests__/__helpers__/helper.ts
+touch __tests__/__helpers__/helper.ts
+```
+
+Copy and paste the code below into that new `helper.ts` using whatever editor you prefer.
+
+
+```ts
+// Author: Jakub Rozek, Stoplight.io
+// License: Apache License 2.0
+// https://github.com/stoplightio/spectral/blob/develop/packages/rulesets/src/__tests__/__helpers__/tester.ts
+
+import { IRuleResult, Spectral, Document, Ruleset, RulesetDefinition } from '@stoplight/spectral-core';
+import { httpAndFileResolver } from '@stoplight/spectral-ref-resolver';
+import myRuleset from '../../src/ruleset';
+
+export type RuleName = keyof Ruleset['rules'];
+
+type Scenario = ReadonlyArray<
+  Readonly<{
+    name: string;
+    document: Record<string, unknown> | Document<unknown, any>;
+    errors: ReadonlyArray<Partial<IRuleResult>>;
+    mocks?: Record<string, Record<string, unknown>>;
+  }>
+>;
+
+export default (ruleName: RuleName, tests: Scenario): void => {
+  describe(`Rule ${ruleName}`, () => {
+    const concurrent = tests.every(test => test.mocks === void 0 || Object.keys(test.mocks).length === 0);
+    for (const testCase of tests) {
+      (concurrent ? it.concurrent : it)(testCase.name, async () => {
+        const s = createWithRules([ruleName]);
+        const doc = testCase.document instanceof Document ? testCase.document : JSON.stringify(testCase.document);
+        const errors = await s.run(doc);
+        expect(errors.filter(({ code }) => code === ruleName)).toEqual(
+          testCase.errors.map(error => expect.objectContaining(error) as unknown),
+        );
+      });
+    }
+  });
+};
+
+export function createWithRules(rules: (keyof Ruleset['rules'])[]): Spectral {
+  const s = new Spectral({ resolver: httpAndFileResolver });
+
+  s.setRuleset({
+    extends: [
+      [myRuleset as RulesetDefinition, 'off'],
+    ],
+    rules: rules.reduce((obj, name) => {
+      obj[name] = true;
+      return obj;
+    }, {}),
+  });
+
+  return s;
+}
+```
+
+This big chunk of code should _just work_ so long as the path to your ruleset is correct, which by default is `src/ruleset.ts` with `src/` and `__tests__/` living next to each other. 
+
+My `src/ruleset.ts` looks like this:
+
+```ts
+import { enumeration, truthy, undefined as undefinedFunc, pattern, schema } from "@stoplight/spectral-functions";
+import { oas2, oas3 } from "@stoplight/spectral-formats";
+import { DiagnosticSeverity } from "@stoplight/types";
+
+export default {
+  rules: {
+
+    // Author: Phil Sturgeon (https://github.com/philsturgeon)
+    'paths-kebab-case': {
+      description: 'Should paths be kebab-case.',
+      message: '{{property}} should be kebab-case (lower case and separated with hyphens).',
+      given: "$.paths[*]~",
+      then: {
+        function: pattern,
+        functionOptions: {
+          match: '^(/|[a-z0-9-.]+|{[a-zA-Z0-9_]+})+$'
+        }
+      },
+      severity: DiagnosticSeverity.Warning,
+    },
+
+    // ... snip ... 
+
+    // Author: Nauman Ali (https://github.com/naumanali-stoplight)
+    'no-global-versioning': {
+      description: 'Server URL should not contain global versions',
+      message: 'Using global versions just forces all your clients to do a lot more work for each upgrade. Please consider using API Evolution instead. More: https://apisyouwonthate.com/blog/api-evolution-for-rest-http-apis.',
+      given: "$.servers[*].url",
+      then: {
+        function: pattern,
+        functionOptions: {
+          notMatch: '\/v[1-9]+'
+        }
+      },
+      formats: [oas3],
+      severity: DiagnosticSeverity.Warning,
+    }
+  }
+};
+```
+
+You can just copy paste these for now, or write something new if you're familiar with [writing rulesets](https://meta.stoplight.io/docs/spectral/ZG9jOjI1MTg5-custom-rulesets), up to you. Either way lets move onto writing the tests.
+
+## 3.) Writing Tests for Spectral Rules
+
+
+I create a different test file for each rule in the ruleset, e.g.: `__tests__/no-global-versioning.test.ts`, then use the new `testRule()` method defined in the helper.
+
+```ts
+import { DiagnosticSeverity } from '@stoplight/types';
+import testRule from './__helpers__/helper';
+
+testRule('no-global-versioning', [
+  {
+    name: 'valid case',
+    document: {
+      openapi: '3.1.0',
+      info: { version: '1.0' },
+      paths: { '/': {} },
+      servers: [{ url: 'https://api.example.com/' }]
+    },
+    errors: [],
+  },
+
+  {
+    name: 'an API that is getting ready to give its consumers a really bad time',
+    document: {
+      openapi: '3.1.0',
+      info: { version: '1.0' },
+      paths: { '/': {} },
+      servers: [{ url: 'https://api.example.com/v1' }]
+    },
+    errors: [
+      {
+        message: 'Using global versions just forces all your clients to do a lot more work for each upgrade. Please consider using API Evolution instead. More: https://apisyouwonthate.com/blog/api-evolution-for-rest-http-apis.',
+        path: ['servers', '0', 'url'],
+        severity: DiagnosticSeverity.Warning,
+      },
+    ],
+  },
+
+  {
+    name: 'an API that got massively out of control as usual',
+    document: {
+      openapi: '3.1.0',
+      info: { version: '1.0' },
+      paths: { '/': {} },
+      servers: [{ url: 'https://api.example.com/v13' }]
+    },
+    errors: [
+      {
+        message: 'Using global versions just forces all your clients to do a lot more work for each upgrade. Please consider using API Evolution instead. More: https://apisyouwonthate.com/blog/api-evolution-for-rest-http-apis.',
+        path: ['servers', '0', 'url'],
+        severity: DiagnosticSeverity.Warning,
+      },
+    ],
+  },
+]);
+```
+
+This is not standard Jest, and I'd really appreciate help making it better and releasing it as a package, but it gets the job done. There's the happy path, and a few examples of API description documents that will return "errors", which includes warnings, info, etc. It's using `expect.objectContaining` under the hood so you can use other Jest assertions in there and specify as many properties as you like. Check out the type definitions in your IDE if you need more guidance there. 
+
+One last thing before we can run Jest is creating a `jest.config.js` file:
+
+```js
+module.exports = async () => {
+  return {
+    preset: 'ts-jest',
+    testPathIgnorePatterns: ['__helpers__'],
+    testEnvironment: 'node',
+    globals: {
+      'ts-jest': {
+        useIsolatedModules: true,
+      },
+    },
+  };
+};
+```
+
+With this done you shoud be able to use the `$ jest` command to run the test suite. I was having some trouble with PATH so had to use `npm exec jest` but that got annoying so I updated `package.json` to make `$ npm test` work:
+
+```json
+  "scripts": {
+    "test": "jest"
+  },
+```
+
+When I run the test suite 
+
+
+```
+$ npm test
+
+> @apisyouwonthate/style-guide@0.0.0 test
+> jest
+
+ PASS  __tests__/no-global-versioning.test.ts
+  Rule no-global-versioning
+    ✓ valid case
+    ✓ an API that is getting ready to give its consumers a really bad time
+    ✓ an API that got massively out of control as usual
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        1.114 s
+```
+
+## 4.) Continuous Integration
+
+To make sure nobody is contributing bugs we can make the test suite run for all pull requests. I use GitHub Actions for simple packages like this to avoid having "another SaaS" involved, but there is no special GitHub Action magic happening. 
+
+```
+mkdir -p .github/workflows/
+touch .github/workflows/test.yml
+```
+
+In that new file add something like this:
+
+```yaml
+name: Run Tests
+on: [push]
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npm test
+```
+
+That will install all the dependencies needed, and then run `npm test`.
+
+And there we go! 
+
+Go forth and make amazing rulesets. 
+
+Shape how your APIs will be built _before_ they are built. 
+
+Improve things over time by adding more rules after they're built. 
+
+Make your API design reviews easy, and focused on useful domain specific knowledge instead of bickering about style. 
+
+When they're published add a link to the [stoplightio/spectral-rulesets](https://github.com/stoplightio/spectral-rulesets) repository so we can keep track of them, and eventually make a marketplace where people can mix and match styles and standards, like picking a "JSON:API" ruleset, a AWS Gateway ruleset, and the Acme Corp style guide (because you like their style).
