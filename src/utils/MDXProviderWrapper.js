@@ -2,7 +2,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { MDXEmbedProvider } from 'mdx-embed';
 
 import Image from 'next/image';
 import NextLink from 'next/link';
@@ -171,9 +170,7 @@ const components = {
 
 // eslint-disable-next-line react/prop-types
 const MDXProviderWrapper = ({ children }) => (
-  <MDXEmbedProvider>
-    <MDXProvider components={components}>{children}</MDXProvider>
-  </MDXEmbedProvider>
+  <MDXProvider components={components}>{children}</MDXProvider>
 );
 
 export default MDXProviderWrapper;
