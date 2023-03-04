@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from "next/legacy/image";
+import Image from "next/image";
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -24,7 +24,10 @@ const Header = () => {
               alt="APIs You Won't Hate"
               width="130px"
               height="60px"
-            />
+              style={{
+                maxWidth: "100%",
+                height: "auto"
+              }} />
           </Link>
           <Stack
             as="nav"

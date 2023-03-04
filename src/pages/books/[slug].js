@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 import {
   Box,
@@ -158,7 +158,10 @@ const BookPage = ({ book }) => {
             objectFit={'contain'}
             height="700"
             width={'550'}
-          />
+            style={{
+              maxWidth: "100%",
+              height: "auto"
+            }} />
         </Grid>
       </Container>
 

@@ -9,7 +9,7 @@ import {
   useTheme,
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 import { GitHubIcon, RssIcon, TwitterIcon } from '../icons';
 import { NewsletterForm } from '../NewsletterForm';
@@ -64,7 +64,10 @@ const Footer = () => {
                 alt="APIs You Won't Hate"
                 width="130px"
                 height="60px"
-              />
+                style={{
+                  maxWidth: "100%",
+                  height: "auto"
+                }} />
             </Link>
             <Text
               textAlign={['center', 'center', 'left']}
@@ -172,7 +175,13 @@ const Footer = () => {
             target="_blank"
             rel="noreferrer noopener"
           >
-            <Image alt="Powered by Vercel" src={poweredByVercel} />
+            <Image
+              alt="Powered by Vercel"
+              src={poweredByVercel}
+              style={{
+                maxWidth: "100%",
+                height: "auto"
+              }} />
           </a>
         </p>
         <Text as="small">

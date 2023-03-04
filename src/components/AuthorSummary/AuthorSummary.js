@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 import { Box, Button, Heading, Link, Stack, Text } from '@chakra-ui/react';
 
@@ -25,8 +25,11 @@ const AuthorSummary = ({ author }) => {
               alt={name}
               width="400px"
               height="400px"
-              objectFit="cover"
-            />
+              style={{
+                maxWidth: "100%",
+                height: "auto",
+                objectFit: "cover"
+              }} />
           </Link>
         )}
         <Heading

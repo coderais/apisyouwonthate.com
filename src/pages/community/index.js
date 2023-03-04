@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 import {
   Button,
@@ -39,7 +39,13 @@ const CommunityPage = () => (
             Join us in Slack
           </Button>
         </Stack>
-        <Image src={slackImage} alt="Our slack community" />
+        <Image
+          src={slackImage}
+          alt="Our slack community"
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }} />
       </Grid>
     </Container>
   </Layout>

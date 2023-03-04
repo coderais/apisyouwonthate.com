@@ -3,7 +3,7 @@
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 
-import Image from "next/legacy/image";
+import Image from "next/image";
 import NextLink from 'next/link';
 
 import {
@@ -133,11 +133,28 @@ const NextOptimizedImage = (props) => {
 
   if (src.startsWith('https://remotive.com/job/track')) {
     // eslint-disable-next-line jsx-a11y/alt-text
-    return <Image height={1} width={1} {...props} />;
+    return (
+      <Image
+        height={1}
+        width={1}
+        {...props}
+        style={{
+          maxWidth: "100%",
+          height: "auto"
+        }} />
+    );
   }
 
   return (
-    <Image {...props} layout="responsive" loading="lazy" alt={props?.alt} />
+    <Image
+      {...props}
+      loading="lazy"
+      alt={props?.alt}
+      sizes="100vw"
+      style={{
+        width: "100%",
+        height: "auto"
+      }} />
   );
 };
 

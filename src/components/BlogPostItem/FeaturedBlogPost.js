@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Link from 'next/link';
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 import {
   SimpleGrid,
@@ -66,8 +66,11 @@ const FeaturedBlogPost = ({ post }) => {
             src={`/images/posts/${coverImage}`}
             width="800"
             height="420"
-            objectFit="contain"
-          />
+            style={{
+              maxWidth: "100%",
+              height: "auto",
+              objectFit: "contain"
+            }} />
         </Box>
       </Link>
     </SimpleGrid>

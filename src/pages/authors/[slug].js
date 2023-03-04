@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 import { serialize } from 'next-mdx-remote/serialize';
 import {
@@ -99,7 +99,10 @@ const AuthorPage = ({ author, posts }) => {
                 height="300"
                 width="300"
                 alt={`${name} headshot`}
-              />
+                style={{
+                  maxWidth: "100%",
+                  height: "auto"
+                }} />
               {consultingUrl && (
                 <Button>
                   <a
