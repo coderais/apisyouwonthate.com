@@ -59,14 +59,12 @@ const Footer = () => {
         <GridItem colSpan={[1, 2, 3]}>
           <Stack textAlign={['center', 'center', 'left']}>
             <Link href="/">
-              <a>
-                <Image
-                  src={logo}
-                  alt="APIs You Won't Hate"
-                  width="130px"
-                  height="60px"
-                />
-              </a>
+              <Image
+                src={logo}
+                alt="APIs You Won't Hate"
+                width="130px"
+                height="60px"
+              />
             </Link>
             <Text
               textAlign={['center', 'center', 'left']}
@@ -85,25 +83,15 @@ const Footer = () => {
             textAlign={['center', 'left', 'left']}
             shouldWrapChildren={true}
           >
-            <Link href="/books">
-              <a mt="1rem">Books</a>
-            </Link>
+            <Link href="/books">Books</Link>
 
-            <Link href="/blog">
-              <a>Blog</a>
-            </Link>
+            <Link href="/blog">Blog</Link>
 
-            <Link href="/videos">
-              <a>Videos</a>
-            </Link>
+            <Link href="/videos">Videos</Link>
 
-            <Link href="/podcast">
-              <a>Podcast</a>
-            </Link>
+            <Link href="/podcast">Podcast</Link>
 
-            <Link href="/ama">
-              <a>Ask us a question</a>
-            </Link>
+            <Link href="/ama">Ask us a question</Link>
           </Stack>
         </GridItem>
         <GridItem colSpan={1}>

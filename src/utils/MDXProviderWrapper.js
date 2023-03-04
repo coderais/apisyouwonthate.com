@@ -48,9 +48,7 @@ const CustomHeading = ({ as, children, id, ...rest }) => {
           },
         }}
       >
-        <NextLink href={`#${id}`}>
-          <a>{children}</a>
-        </NextLink>
+        <NextLink href={`#${id}`}>{children}</NextLink>
       </Heading>
     );
   }

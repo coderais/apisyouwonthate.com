@@ -15,23 +15,19 @@ const BlogPostItem = ({ post }) => {
   return (
     <Stack maxW={'calc(100vw - 32px)'}>
       <Link href={postUrl}>
-        <a>
-          <Image
-            alt={title}
-            src={`/images/posts/${coverImage}`}
-            width="400px"
-            height="250px"
-            objectFit={'contain'}
-          />
-        </a>
+        <Image
+          alt={title}
+          src={`/images/posts/${coverImage}`}
+          width="400px"
+          height="250px"
+          objectFit={'contain'}
+        />
       </Link>
       <main>
         <Link href={postUrl} style={{ textDecoration: 'none' }}>
-          <a>
-            <Heading as="h2" size="lg">
-              {title}
-            </Heading>
-          </a>
+          <Heading as="h2" size="lg">
+            {title}
+          </Heading>
         </Link>
         <AuthorDisplay name={author} date={date} />
         <p>{subtitle}</p>

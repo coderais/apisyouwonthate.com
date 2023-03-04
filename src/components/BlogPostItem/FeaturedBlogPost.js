@@ -27,14 +27,12 @@ const FeaturedBlogPost = ({ post }) => {
       <Stack spacing={4}>
         <Overline>Featured Article</Overline>
         <Heading as="h1">
-          <Link href={blogPostUrl}>
-            <a>{title}</a>
-          </Link>
+          <Link href={blogPostUrl}>{title}</Link>
         </Heading>
         <Text>
           written by{' '}
           <Link href={`/authors/${slugify(author)}`} passHref>
-            <Text as="a" color="green.700" fontSize={'md'}>
+            <Text color="green.700" fontSize={'md'}>
               {author}
             </Text>
           </Link>
@@ -52,7 +50,6 @@ const FeaturedBlogPost = ({ post }) => {
         >
           <Link href={blogPostUrl} passHref>
             <Text
-              as="a"
               color="green.700"
               fontWeight={'bold'}
               _hover={{ color: 'green.400' }}
@@ -63,17 +60,15 @@ const FeaturedBlogPost = ({ post }) => {
         </Stack>
       </Stack>
       <Link justifySelf="end" href={blogPostUrl}>
-        <a>
-          <Box rounded={'md'}>
-            <Image
-              alt={title}
-              src={`/images/posts/${coverImage}`}
-              width="800"
-              height="420"
-              objectFit="contain"
-            />
-          </Box>
-        </a>
+        <Box rounded={'md'}>
+          <Image
+            alt={title}
+            src={`/images/posts/${coverImage}`}
+            width="800"
+            height="420"
+            objectFit="contain"
+          />
+        </Box>
       </Link>
     </SimpleGrid>
   );

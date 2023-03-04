@@ -55,10 +55,7 @@ const AMAPage = () => {
             <p>
               We&apos;ll do our best to answer your question as quickly as
               possible. Make sure to subscribe to the{' '}
-              <Link href="/podcast">
-                <a>podcast</a>
-              </Link>
-              , too. Have a great day!
+              <Link href="/podcast">podcast</Link>, too. Have a great day!
             </p>
           </Stack>
         ) : (
