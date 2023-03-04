@@ -1,6 +1,6 @@
 import { serialize } from 'next-mdx-remote/serialize';
 
-import Image from 'next/image';
+import Image from "next/legacy/image";
 
 import { Box, Container, Grid, Heading, Stack, Text } from '@chakra-ui/react';
 import { MDXRemote } from 'next-mdx-remote';

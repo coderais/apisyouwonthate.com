@@ -9,7 +9,7 @@ import {
   useTheme,
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 
 import { GitHubIcon, RssIcon, TwitterIcon } from '../icons';
 import { NewsletterForm } from '../NewsletterForm';

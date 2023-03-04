@@ -3,7 +3,7 @@
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import NextLink from 'next/link';
 
 import {
