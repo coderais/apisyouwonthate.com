@@ -1,10 +1,16 @@
 const redirects = require('./redirects');
 
+// for oembed support: https://mdxjs.com/guides/embed/#embeds-at-compile-time
+const fauxRemarkEmbedder = require('@remark-embedder/core');
+const fauxOembedTransformer = require('@remark-embedder/transformer-oembed');
+const remarkEmbedder = fauxRemarkEmbedder.default;
+const oembedTransformer = fauxOembedTransformer.default;
+
 // next.config.js
 const withMDX = require('@next/mdx')({
   extension: /\.(md|mdx)$/,
   options: {
-    remarkPlugins: [],
+    remarkPlugins: [[remarkEmbedder, { transformers: [oembedTransformer] }]],
     rehypePlugins: [],
   },
 });
