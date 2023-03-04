@@ -54,7 +54,7 @@ Once a response has been stored, then future requests may reuse that stored resp
 
 #### Effective URI matches stored response?
 
-The request URI is used as part of the primary cache lookup key. The other part is the request method which we will talk about next. The term “Effective URI” is used because on the server side [some processing](https://tools.ietf.org/html/draft-ietf-httpbis-p1-messaging-26#section-5.5) is needed to reconstruct the URI that the client used to make the request.
+The request URI is used as part of the primary cache lookup key. The other part is the request method which we will talk about next. The term "Effective URI” is used because on the server side [some processing](https://tools.ietf.org/html/draft-ietf-httpbis-p1-messaging-26#section-5.5) is needed to reconstruct the URI that the client used to make the request.
 
 #### Can HTTP request method return cached responses?
 
@@ -68,7 +68,7 @@ This innocuous little question deserves a blog post all of it’s own so please 
 
 A request that contains a no-cache directive in either the cache-control header or the pragma header will not allow a stored response to be used directly even if it is fresh. Before it can be used, the cache must make a conditional request back to the server to confirm that the stored response is still valid. Once that is confirmed, then the stored response can be returned. So, to re-iterate, just because you sent a request with no-cache, doesn’t mean that you won’t get a response served from a cache. However, you will be guaranteed that it is up to date.
 
-The same revalidation process occurs if the stored response contains a no-cache header. Most people are surprised when they find out that no-cache doesn’t mean “don’t cache”. It simply means “must-revalidate even if still fresh”.
+The same revalidation process occurs if the stored response contains a no-cache header. Most people are surprised when they find out that no-cache doesn’t mean "don’t cache”. It simply means "must-revalidate even if still fresh”.
 
 You might notice that there is no check for the no-store request header in the diagram. The no-store request header is only tested when determining if a response can be cached. If some other user of a shared cache issues a request to a resource that is cacheable and then you issue a request to the same resource with no-store, you could still return a cached response.
 

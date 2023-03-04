@@ -29,6 +29,7 @@ In JSON Hyper-Schema a resource representation is defined by two fields, targetS
 
 So if you used the following JSON Hyper-Schema…
 
+```json
     {
         "type": "object",
         "properties": {
@@ -42,17 +43,22 @@ So if you used the following JSON Hyper-Schema…
             "targetSchema": { "$ref": "#"}
         }]
     }
+```
 
 You would expect the following request…
 
+```http
     GET https://api.dashron.com/users/12345
+```
 
 To return something that looks like the following response…
 
+```json
     {
         "id": 12345,
         "name": "Zena"
     }
+```
 
 Let’s dig into why.
 
@@ -60,10 +66,11 @@ First, the LDO has an href of [https://api.dashron.com/users/12345](https://api.
 
 Next, targetMediaType suggests that we will receive a representation that matches the application/json media type. Nothing fancy here, but we now know that we need to pull out our trusty JSON parser.
 
-Finally, targetSchema uses a schema reference ({“$ref”: “#”}) to point to the root document. This pattern is particularly common for LDOs with a rel of self because these LDOs describe how to access the current context.
+Finally, targetSchema uses a schema reference (`{"$ref”: "#”}`) to point to the root document. This pattern is particularly common for LDOs with a rel of self because these LDOs describe how to access the current context.
 
 Other LDOs may reference other JSON Hyper-Schema documents or embed an entire JSON schema. The following example does not use a schema reference. It has an LDO that describes the author of the current resource, and states that the author’s representation will contain an id and name .
 
+```json
     {
         "type": "object",
         "properties": {
@@ -80,6 +87,7 @@ Other LDOs may reference other JSON Hyper-Schema documents or embed an entire JS
            }
         }]
     }
+```
 
 ## Describing request bodies
 
@@ -89,6 +97,7 @@ Most HTTP requests can include a request body. Two of the most common uses of re
 
 Sometimes you send a request body to replace the representation of an existing resource. To explain this further, let’s bring back a previous JSON Hyper-Schema example.
 
+```json
     {
         "type": "object",
         "properties": {
@@ -102,14 +111,17 @@ Sometimes you send a request body to replace the representation of an existing r
             "targetSchema": { "$ref": "#"}
         }]
     }
+```
 
 Earlier we described how this LDO can accept HTTP GET requests. Those GET requests will return JSON that validates against this schema. If we want to replace that representation we can make an HTTP PUT request with a new JSON instance that also validates against this schema.
 
+```http
     PUT /users/12345
     {
         "id": 12345,
         "name": "Not Zena"
     }
+```
 
 And that’s it. The very same schema can describe GET and PUT requests. If you would like your Hyper-Schema to be more specific about what is and is not supported, check out the HTTP Methods section below.
 
@@ -121,6 +133,7 @@ What if your request body doesn’t match the target representation? You commonl
 
 That request might return the following resource representation, which contains multiple videos
 
+```json
     {
         "items": [{
             "id": 12345,
@@ -131,13 +144,16 @@ That request might return the following resource representation, which contains 
         }],
         "total": 2
     }
+```
 
 If you want to add a new video to that collection, you might make the following request…
 
+```http
     POST /users/12345/videos
     {
         "title": "My third video"
     }
+```
 
 In this case, we can’t use targetSchema because the request body isn’t identical to the target representation. When the body doesn’t match the representation we should use submissionSchema and submissionMediaType.
 
@@ -145,6 +161,7 @@ This is the main difference between the target and submission keywords. The valu
 
 Now let’s describe those HTTP requests with JSON Hyper-Schema.
 
+```json
     {
         "type": "object",
         "properties": {
@@ -168,6 +185,7 @@ Now let’s describe those HTTP requests with JSON Hyper-Schema.
             }
         }]
     }
+```
 
 As mentioned earlier the submissionSchema value describes the HTTP POST request body and the submissionMediaType indicates the the request body should be JSON.
 
@@ -181,6 +199,7 @@ There are two different types of HTTP headers, one for HTTP requests and one for
 
 To describe how clients can provide request headers, use headerSchema. headerSchema is a lot like submissionSchema and targetSchema, except it describes the key value pairs of a clients request headers.
 
+```json
     {
         "type": "object",
         "properties": {
@@ -197,6 +216,7 @@ To describe how clients can provide request headers, use headerSchema. headerSch
             }
         }]
     }
+```
 
 This LDO can accept the following header
 
@@ -208,6 +228,7 @@ Each header value is a JSON schema, which means it supports any of the [validati
 
 For response headers, we’ve got something a little different. We’re not describing a response pattern or response schema, we’re actually going to be providing the exact response header values.
 
+```json
     {
         "type": "object",
         "properties": {
@@ -222,6 +243,7 @@ For response headers, we’ve got something a little different. We’re not desc
             }
         }]
     }
+```
 
 The value of targetHints should be an object, with each key being a header, and each value being an array of header values. Header values are always arrays because HTTP allows for duplicate headers (as is commonly seen with set-cookie).
 
@@ -247,7 +269,7 @@ The POST method is best for when you want to send arbitrary data to an endpoint.
 
 The DELETE method only needs a URI, just like GET. You might be able to make an HTTP DELETE request to any LDO with an href property.
 
-If you want to be a little more careful about what LDOs support DELETE actions, check out the “Want to be more specific?” section below.
+If you want to be a little more careful about what LDOs support DELETE actions, check out the "Want to be more specific?” section below.
 
 ### PUT
 
@@ -257,6 +279,7 @@ The PUT method is similar to POST, except it expects the request body to replace
 
 PATCH requests are a little unique. It’s kinda like a PUT, but because you aren’t replacing the entire representation, your request body uses a special format (such as [JSON merge patch](https://tools.ietf.org/html/rfc7386)). To tell the client which formats are acceptable, use the accept-patch header in the targetHints object.
 
+```json
     {
         "type": "object",
         "properties": {
@@ -275,6 +298,7 @@ PATCH requests are a little unique. It’s kinda like a PUT, but because you are
             }
         }]
     }
+```
 
 This JSON Hyper-Schema states that you can make PATCH requests with the merge-patch format, and the body can contain an id or name.
 
@@ -286,6 +310,7 @@ If you don’t want to rely on assumptions, you can explicitly state which HTTP 
 
 Here’s how it looks in a JSON Hyper-Schema document
 
+```json
     {
         "type": "object",
         "properties": {
@@ -302,6 +327,7 @@ Here’s how it looks in a JSON Hyper-Schema document
             }
         }]
     }
+```
 
 ## Wrapping Up
 

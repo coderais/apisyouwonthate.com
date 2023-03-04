@@ -14,7 +14,7 @@ like [Prometheus](https://prometheus.io/) which can track all sorts of metrics,
 but that assumes metrics are being sent to it which let you know there’s a
 problem. Maybe [NewRelic](https://newrelic.com/) can track response times, and
 [Rollbar](https://rollbar.com/) can track exceptions, but there could be a lot
-of things relating to “application health” which do not fall into those
+of things relating to "application health” which do not fall into those
 categories.
 
 Application health is an important difference to test suite success. Test suites
@@ -22,7 +22,7 @@ confirm that the code you’ve pointed some tests at work with the environment
 variables in your test suite, but that doesn’t mean that same code will work
 with different environment variables.
 
-Some people confuse application health with “server health”, but that is rather
+Some people confuse application health with "server health”, but that is rather
 different. Server health is knowing things like the amount of disk space or
 memory that your server has left, and reporting that the database is running
 perfectly. This is easily solved with tools like
@@ -32,7 +32,7 @@ knows how to talk to that perfectly functioning database.
 
 To get a current snapshot of the health of a specific application (even if its
 only the specific instance you happen to get routed to when you make that HTTP
-request), there are a lot of tools which help you expose some sort of “health
+request), there are a lot of tools which help you expose some sort of "health
 check endpoint”. Every programming language seems to have a prominent tool for
 doing this, at a totally different endpoint, with a totally different payload.
 
@@ -58,14 +58,14 @@ they never become final RFCs. Check out
 [Sunset](https://apisyouwonthate.com/blog/surviving-deprecations-to-resources-and-properties-on-other-apis)
 for another important draft RFC.
 
-Each of those tools need to start supporting “formats”, and there should be a
-“legacy” format (whatever they currently have), and a “RFC HealthCheck” format
+Each of those tools need to start supporting "formats”, and there should be a
+"legacy” format (whatever they currently have), and a "RFC HealthCheck” format
 which supports this draft RFC.
 
-Using these tools has allowed departments at WeWork to build internal “Status
+Using these tools has allowed departments at WeWork to build internal "Status
 Dashboards” that let support staff have great insight into the status of various
-applications. Especially if the health checks go beyond the standard “database”
-and “cache” checks, and start reporting circuit breaker statuses for other
+applications. Especially if the health checks go beyond the standard "database”
+and "cache” checks, and start reporting circuit breaker statuses for other
 services.
 
 ## Kubernetes Cares about Application Health
@@ -76,7 +76,7 @@ deployed?
 
 If you happen to be using Kubernetes, you can use HTTP-based [readiness probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/), which make sure that application doesn’t make it into rotation in the load balancer until it is ready. After it becomes ready, if at any point in the future it seems to be suffering, Kubernetes will remove it from the load balancer automatically!
 
-Kubernetes pods have a whole [lifecycle](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/), but basically pods are created, and remain as “pending” until they are “ready”. Once a pod the pod is considered “ready” it will be placed in the load balancer for that service, and it will start accepting traffic. When a new pod is placed into the load balancer, a corresponding pod for that service from a previous release will be removed. If a service has multiple pods it will do this one at a time, and as each new pod becomes ready a corresponding old one will be removed until the new release is complete.
+Kubernetes pods have a whole [lifecycle](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/), but basically pods are created, and remain as "pending” until they are "ready”. Once a pod the pod is considered "ready” it will be placed in the load balancer for that service, and it will start accepting traffic. When a new pod is placed into the load balancer, a corresponding pod for that service from a previous release will be removed. If a service has multiple pods it will do this one at a time, and as each new pod becomes ready a corresponding old one will be removed until the new release is complete.
 
 Exactly how Kubernetes determines a pod to be ready depends on how the readiness probe was configured the [your Helm chart](https://docs.google.com/document/d/1CELGSyDLOQ0D9TFgbVA19eKKzlUbU_ynowd40ilomKQ/edit#), specifically in `<yourapp>-chart/templates/<service>-deployment.yaml`
 
@@ -100,9 +100,9 @@ spec:
 This is telling Kubernetes to wait 5 seconds, then try and send a HTTP GET
 request to `/health`. If that endpoint returns a HTTP response code is between
 200 and 399 then the pod is considered ready. If it returns any other status,
-then it will stay as “pending”, and another probe will be send later on.
+then it will stay as "pending”, and another probe will be send later on.
 
-Another type of probe is “liveness”. Once a pod has been defined as ready, it is
+Another type of probe is "liveness”. Once a pod has been defined as ready, it is
 then live, until a liveness check decides it is not live. This could mean the
 server crashed, the pod ran out of memory, or any one of many other things that
 can cause code to fail. A liveness probe works just the same as a readiness
@@ -134,7 +134,7 @@ Check](https://inadarei.github.io/rfc-healthcheck/).
 
 #### exec
 
-Exec is a fantastic “other” option, which does not rely on TCP or HTTP at all.
+Exec is a fantastic "other” option, which does not rely on TCP or HTTP at all.
 For example, Redis could be implemented as a TCP check, but it is so much better
 handled with an `exec` probe:
 
@@ -171,14 +171,14 @@ This serves as a warning that using non-standard API implementations means you
 need non-standard solutions. gRPC only got a standard for doing this recently,
 and implementing it needs awkward treatment in Kubernetes.
 
-If you use GraphQL there still isn’t really a plan. Googling “graphql health
+If you use GraphQL there still isn’t really a plan. Googling "graphql health
 checks” somebody is just tweeting about maybe automating a simple query.
 
 Standards are great folks!
 
 When I write about [the differences between REST and Other
 Implementations™](/blog/picking-api-paradigm)
-and say things like “standard HTTP things do not work for GraphQL/gRPC”, this is
+and say things like "standard HTTP things do not work for GraphQL/gRPC”, this is
 the sort of thing being discussed. Over time implementation specific solutions
 are created and there are various workarounds floating about, but ignoring the
 conventions of HTTP can lead to complications. If you understand the pros and

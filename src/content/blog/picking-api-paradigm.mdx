@@ -1,7 +1,7 @@
 ---
 title: Picking the right API Paradigm
 subtitle: >-
-  This article provides a decision flow diagram for selecting the “approach” to
+  This article provides a decision flow diagram for selecting the "approach” to
   use for your next API.
 date: '2018-05-21T00:00:00.000Z'
 coverImage: decisions.jpeg
@@ -9,9 +9,9 @@ type: blog
 author: Phil Sturgeon
 ---
 
-This article provides a decision flow diagram for selecting the “approach” to use for your next API.
+This article provides a decision flow diagram for selecting the "approach” to use for your next API.
 
-To oversimplify things a bit, it’s reasonably fair to say that all APIs conform to a paradigm: “RPC”, “REST”, or “query language”. These are general approaches to building APIs, but not a specific tool or specification. They are merely a concept, not a tangible thing.
+To oversimplify things a bit, it’s reasonably fair to say that all APIs conform to a paradigm: "RPC”, "REST”, or "query language”. These are general approaches to building APIs, but not a specific tool or specification. They are merely a concept, not a tangible thing.
 
 Implementations are something you can actually download, install, and use to build an API, that conforms to whatever rules the implementors picked, from whichever paradigms they wanted to use at the time.
 
@@ -35,9 +35,9 @@ Instead we went with gRPC, REST, and GraphQL.
 
 A quick guide to picking an approach for your next API, in the form of a decision flow diagram.
 
-Wait, what is that “context boundary” thing all about?! Basically, it’s the idea that whenever a the line is crossed between any imaginary boundary, a few more layers of abstraction should be used to help with the longevity of the system. REST provides those layers of abstraction, and GraphQL provides a few too.
+Wait, what is that "context boundary” thing all about?! Basically, it’s the idea that whenever a the line is crossed between any imaginary boundary, a few more layers of abstraction should be used to help with the longevity of the system. REST provides those layers of abstraction, and GraphQL provides a few too.
 
-That boundary could be as simple as another team/department/company, or a group of systems that just shouldn’t know about each other. Things within the context can treat their own APIs like “private classes” in programming languages, they can change whenever they want, spin up and down, delete, evolve, change, who cares. When going to another context… probably use things like REST (with Hypermedia and JSON Schema) to help those clients last longer without needing developer involvement for most change.
+That boundary could be as simple as another team/department/company, or a group of systems that just shouldn’t know about each other. Things within the context can treat their own APIs like "private classes” in programming languages, they can change whenever they want, spin up and down, delete, evolve, change, who cares. When going to another context… probably use things like REST (with Hypermedia and JSON Schema) to help those clients last longer without needing developer involvement for most change.
 
 ![](/images/posts/picking-paradigms/context-boundary.png)
 

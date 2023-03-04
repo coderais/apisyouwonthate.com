@@ -21,7 +21,7 @@ Android, etc.) talk to services, and services talk to other services. This chain
 of calls can stack up, as service A calls service B, unaware that system is
 calling service C and D… So long as A, B, C and D are functioning normally, the
 frontend application can hope to get a response from service A within a
-“reasonable time”, but if B, C or D are having a bad time, it can cause a domino
+"reasonable time”, but if B, C or D are having a bad time, it can cause a domino
 effect that takes out a large chunk of your architecture, and the ripple effects
 result in a slow experience for the end users.
 
@@ -116,10 +116,10 @@ once the connection is open. It’s common for this to be set higher, as waiting
 for a server to generate an answer (run queries, fetch data, serialize it, etc.)
 should take longer than opening the connection.
 
-When you see the term “timeout” on its own (not an open timeout or a read
+When you see the term "timeout” on its own (not an open timeout or a read
 timeout) that usually means the total timeout.
 [Faraday](https://github.com/lostisland/faraday/) takes `timeout = 5` and
-`open_timeout = 2` to mean “I demand the server marks the connection as open
+`open_timeout = 2` to mean "I demand the server marks the connection as open
 within 2 seconds, then regardless of how long that took, it only has 5 seconds
 to finish responding.”
 
@@ -160,7 +160,7 @@ The most important benefit of failing fast is to give other workers the chance
 to work.
 
 If the server is a third party company, you might have a service-level agreement
-stating: “Our API will always respond in 150ms”. Great, set it to 150ms (and
+stating: "Our API will always respond in 150ms”. Great, set it to 150ms (and
 retry on failure if the thing is important.)
 
 If the service is in-house, then try to get access to NewRelic, CA APM or
@@ -175,7 +175,7 @@ Seems fair right? The biggest spike there is 250ms and so round it up a bit and
 let’s go for 300ms?
 
 Nope! These are averages, and averages are going to be far far lower than the
-slowest transactions. Click the drop-down and find “Web transaction
+slowest transactions. Click the drop-down and find "Web transaction
 percentiles.”
 
 ![Chart showing percentiles for transactions](/images/posts/taking-a-timeout-from-poor-performance/percentiles.png)
@@ -223,7 +223,7 @@ end
 There is potential for trouble here, as the second and first attempts might end
 up in a race condition. The interval there will hopefully give the database long
 enough to notice the first response was successful, meaning the 2nd request will
-fail and say “already paid” or something intelligent, which can be inspected and
+fail and say "already paid” or something intelligent, which can be inspected and
 potentially treated as a success by the client.
 
 Anyway, (400 \* 2) + 50 = 950, with another 50ms for whatever other random gumf
@@ -256,7 +256,7 @@ So in our example, Service A might notice that service B is down after the 10th
 error in 1 second, and at that point it opens the circuit breaker, meaning it
 completely stops making calls to that system. This will decrease the load on
 downstream services (B, C, and D), giving them a chance to recover. This also
-avoids the “running out of threads” issue we discussed previously. Even with
+avoids the "running out of threads” issue we discussed previously. Even with
 service A giving up after 1s, that’s still 1s that thread could have spent
 handling other requests.
 

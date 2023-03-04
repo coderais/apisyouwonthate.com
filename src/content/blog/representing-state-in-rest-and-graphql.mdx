@@ -7,7 +7,7 @@ type: blog
 author: Phil Sturgeon
 ---
 
-Representing state is a complex thing. At my last two jobs, it’s been very common for APIs to be treated like “databases over HTTP”. The fields are sent up and down from the server to multiple mobile/web apps, and there’s not too much else going on.
+Representing state is a complex thing. At my last two jobs, it’s been very common for APIs to be treated like "databases over HTTP”. The fields are sent up and down from the server to multiple mobile/web apps, and there’s not too much else going on.
 
 Over time, we noticed this specific problem happening over and over again: When you ask the clients to infer state from the fields alone, they often infer things differently.
 
@@ -49,7 +49,7 @@ if (model.paid_at) {
 
 This means we can display `Status: Sent` on our various client applications, and it's likely all the apps got that right.
 
-Soon we notice a situation where the payment is initiated, but the payment bounces. Maybe we add another field, and this whole “inspect the dates” thing starts to fall apart.
+Soon we notice a situation where the payment is initiated, but the payment bounces. Maybe we add another field, and this whole "inspect the dates” thing starts to fall apart.
 
 ```js
 {
@@ -66,9 +66,9 @@ Soon we notice a situation where the payment is initiated, but the payment bounc
 }
 ```
 
-A client inferring state from those fields would consider that invoice paid. Another client would consider it to be an unpaid invoice, as there was a failed payment. If a new “published” state was added, they’d be showing as draft. Mess all over.
+A client inferring state from those fields would consider that invoice paid. Another client would consider it to be an unpaid invoice, as there was a failed payment. If a new "published” state was added, they’d be showing as draft. Mess all over.
 
-Of course, folks will say “well you shouldn’t change things without versioning”, but even if we started with the 2nd example of that JSON and never changed anything, multiple clients could interpret those fields differently.
+Of course, folks will say "well you shouldn’t change things without versioning”, but even if we started with the 2nd example of that JSON and never changed anything, multiple clients could interpret those fields differently.
 
 Changing things without versioning is sometimes known as [API evolution](https://www.mnot.net/blog/2012/12/04/api-evolution), and whilst you shouldn’t go running about breaking things willy nilly, you should be able to add to an API without clients exploding. GraphQL is advertising people use evolution right on their homepage, so it’s not an alien concept.
 
@@ -77,9 +77,9 @@ Changing things without versioning is sometimes known as [API evolution](https:/
 Inferring states from dates or other arbitrary fields is awful, and it _always_
 goes wrong.
 
-I noticed a similar issue with Postmates Fleet saying “Waiting on verification
-of your profile image” on the mobile app, and the web app said “Please upload a
-profile image”. If I dug into the code, I’d bet they were looking for an “image
+I noticed a similar issue with Postmates Fleet saying "Waiting on verification
+of your profile image” on the mobile app, and the web app said "Please upload a
+profile image”. If I dug into the code, I’d bet they were looking for an "image
 verified” switch of some sort, and the web app just happened to notice a field
 that the mobile app didn’t.
 
@@ -142,7 +142,7 @@ invoice.can_transition_to?(:sent) # => true/false
 invoice.transition_to(:paid) # => true/false
 ```
 
-This gives us a lot of ability to assert a single “status”, and you know the server has everything under control. We’ve not had to spread that logic throughout persistence layer logic, controller logic, and arbitrary classes. It’s all in the state machine, and the main thing is that we no longer have to ask the clients to try and guess what’s up with the invoice.
+This gives us a lot of ability to assert a single "status”, and you know the server has everything under control. We’ve not had to spread that logic throughout persistence layer logic, controller logic, and arbitrary classes. It’s all in the state machine, and the main thing is that we no longer have to ask the clients to try and guess what’s up with the invoice.
 
 #### Exposing State over HTTP
 
@@ -150,11 +150,11 @@ Just like the Ruby example, we want to know the current state, and we want to kn
 
 First thing? Shove that `current_state` property in your serializer to expose a `"status": "draft"` field in the output. This'll work fine for both RESTish APIs and those built with GraphQL.
 
-How about the “what to do next” bit? Well, this is exactly what HATEOAS is!
+How about the "what to do next” bit? Well, this is exactly what HATEOAS is!
 
 #### HATEOAS I CALL ON THEE
 
-“Hypermedia As The Engine Of Application State” is a concept that’s ignored by many, but it’s what makes a REST API so powerful.
+"Hypermedia As The Engine Of Application State” is a concept that’s ignored by many, but it’s what makes a REST API so powerful.
 
 At it’s most basic, starting to implement some HATEOAS in your API would look like this:
 
@@ -271,7 +271,7 @@ Perfect!
 
 We know which HTTP method to use. We know what fields to send. We know the data types of the fields. We don’t know a huge amount about what to put in those fields, but it’s a start.
 
-How easy would it be to hook that response up to an “Actions” dropdown, and dynamically have the interface built out from it? You could roll out certain features to your client applications _without touching the client code_.
+How easy would it be to hook that response up to an "Actions” dropdown, and dynamically have the interface built out from it? You could roll out certain features to your client applications _without touching the client code_.
 
 You can finally fire Gary!
 
@@ -279,7 +279,7 @@ There’s quite a few [other data formats](https://sookocheff.com/post/api/on-ch
 
 #### Actions seem unRESTy
 
-Something I’ve said [fairly recently](https://www.smashingmagazine.com/2016/09/understanding-rest-and-rpc-for-http-apis/) is that “actions are RPC” (‘remote procedure call’), which is… semi accurate. If an API is nothing but actions then it is probably better off as RPC. I’m building a permissions API that accepts a bunch of parameters, then returns true or false if the user has permission. That can stay as RPC.
+Something I’ve said [fairly recently](https://www.smashingmagazine.com/2016/09/understanding-rest-and-rpc-for-http-apis/) is that "actions are RPC” (‘remote procedure call’), which is… semi accurate. If an API is nothing but actions then it is probably better off as RPC. I’m building a permissions API that accepts a bunch of parameters, then returns true or false if the user has permission. That can stay as RPC.
 
 REST is all about a beautiful mixture of data, relationships and actions. Taken from the Siren homepage is this lovely quote:
 
@@ -287,7 +287,7 @@ REST is all about a beautiful mixture of data, relationships and actions. Taken 
 
 > Classes define a classification of the nature of the element, be it an entity or an action, in its current representation.
 
-They continue to fit their “add item” link in with the usual expectations for collections and resources, and the add item is still `"href": "http://api.x.io/orders/42/items",`. This mixture of actions and data actually lines up rather well with what I've said in that article.
+They continue to fit their "add item” link in with the usual expectations for collections and resources, and the add item is still `"href": "http://api.x.io/orders/42/items",`. This mixture of actions and data actually lines up rather well with what I've said in that article.
 
 A [recent talk from Mike Amundsen](http://www.amundsen.com/talks/2017-04-craftconf/index.html) goes through a number of topics, but specifically Hypermedia (HATEOAS) as a collection of affordances (potential actions that can taken). This quote was up in there:
 
@@ -299,7 +299,7 @@ We know that if you don’t have HATEOAS, [you only have a RESTish API](http://r
 
 HATEOAS is a really useful concept, which solves so many issues I’ve run into time and time again. I don’t think every API needs to use HATEOAS by any means, and simple (micro)services often wont.
 
-Regardless of needing it, I definitely think people should understand what it is. The main reason? People should know what they’re missing when they call GraphQL “REST 2.0”. GraphQL has no ability to offer HATEOAS\*, and as such is essentially a _subset_ of REST, and not a “new version”.
+Regardless of needing it, I definitely think people should understand what it is. The main reason? People should know what they’re missing when they call GraphQL "REST 2.0”. GraphQL has no ability to offer HATEOAS\*, and as such is essentially a _subset_ of REST, and not a "new version”.
 
 A lot of the [cool stuff you can do in GraphQL can be done in REST](https://blog.runscope.com/posts/you-might-not-need-graphql), but GraphQL has no HATEOAS. Maybe think about that.
 

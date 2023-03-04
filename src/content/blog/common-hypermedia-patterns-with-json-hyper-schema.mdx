@@ -43,7 +43,7 @@ Let’s start with hypermedia associated with the collection representation. Her
 }
 ```
 
-This example includes pagination metadata. Pagination limits the items on the current “page” of data, and gives you a way to request the next page. This resource handles pagination via cursors, which you use with the following url
+This example includes pagination metadata. Pagination limits the items on the current "page” of data, and gives you a way to request the next page. This resource handles pagination via cursors, which you use with the following url
 
 /users?cursor={next_cursor}
 
@@ -89,7 +89,7 @@ Instead of exposing cursors and instructing your client how to build that url, I
 }
 ```
 
-Here, our next Link Description Object (or LDO, as described in a [previous article](/blog/getting-started-with-json-hyper-schema)) has an optional query parameter called cursor (as defined in the URI template href). The templatePointers object states that the cursor parameter should come from the next_page_cursor value in your JSON instance. This gives your client all the necessary to automate constructing the “next page” url.
+Here, our next Link Description Object (or LDO, as described in a [previous article](/blog/getting-started-with-json-hyper-schema)) has an optional query parameter called cursor (as defined in the URI template href). The templatePointers object states that the cursor parameter should come from the next_page_cursor value in your JSON instance. This gives your client all the necessary to automate constructing the "next page” url.
 
 ### Collection Item Hypermedia
 

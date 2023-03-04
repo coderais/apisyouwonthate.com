@@ -2,7 +2,7 @@
 title: 'JSON API, OpenAPI and JSON Schema Working in Harmony'
 description: >-
   A regular question on Twitter, at WeWork, and in the APIs You Won’t Hate Slack
-  community, is: “What standard should my API follow? Should…
+  community, is: "What standard should my API follow? Should…
 date: '2018-09-24T00:11:40.197Z'
 coverImage: triforce.jpeg
 type: blog
@@ -10,7 +10,7 @@ author: Phil Sturgeon
 ---
 
 A regular question on Twitter, at WeWork, and in the [APIs You Won’t Hate Slack
-community,](https://slack.apisyouwonthate.com/) is: “What standard should my API
+community,](https://slack.apisyouwonthate.com/) is: "What standard should my API
 follow? Should it be JSON API or something else?” At which point a bunch of
 people usually start discussing things like OpenAPI and/or JSON Schema. In this
 article, I’d like to talk about how they can all work together in harmony, to do
@@ -111,7 +111,7 @@ objects](https://jsonapi.org//examples/#error-objects-basics) for those not usin
 [RFC 7807](https://tools.ietf.org/html/rfc7807).
 
 All of this is basically very structural, but none of it tells you anything
-about _what_ the data is, or anything about the data. There is no “schema”
+about _what_ the data is, or anything about the data. There is no "schema”
 functionality (or types, as some folks call them). For that, you need to look at
 something like OpenAPI, or JSON Schema.
 
@@ -160,10 +160,10 @@ JSON API and JSON HyperSchema can actually complement each other quite well.
 Aaron Hedges recently wrote about [how JSON HyperSchema can be used to describe
 JSON API
 payloads](https://apisyouwonthate.com/blog/common-hypermedia-patterns-with-json-hyper-schema),
-taking the plain old “here is a HTTP link do with it what you will” approach to
+taking the plain old "here is a HTTP link do with it what you will” approach to
 HATEOAS, and peppering it with all sorts of useful information.
 
-Some folks refer to this as upgrading an APIs “Hypermedia Maturity Model”,
+Some folks refer to this as upgrading an APIs "Hypermedia Maturity Model”,
 taking JSON API from HMM 1 to HMM 2. More on the [Hypermedia Maturity Model
 here](https://8thlight.com/blog/jason-desrosiers/2018/05/30/the-hypermedia-maturity-model.html).
 
@@ -174,8 +174,8 @@ The point here is that these three things all have rather different jobs, and
 can be used together. You don’t want multiple teams cranking out handfuls of
 REST APIs with completely different payload shapes and completely different
 approaches to things, and whatever shape the API data is in, you need to know
-more about what that data actually is. Think of one as a “Data Format” and
-another as a “Data Contract” and things make a bunch more sense.
+more about what that data actually is. Think of one as a "Data Format” and
+another as a "Data Contract” and things make a bunch more sense.
 
 _I’ve used JSON API extensively for years, flipping from being a big fan to an
 outspoken critic, and back again multiple times. JSON API is a great way to

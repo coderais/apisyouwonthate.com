@@ -78,7 +78,7 @@ To avoid spending another half day on a PR, I temporarily used [swagger-cli](htt
 swagger-cli bundle -r docs/api.yml > docs/api.json
 ```
 
-This temporary solution got me far enough to notice that the API for sending query string, headers, body data, etc. is rather convoluted. I found myself building a params hash from smaller lets as the “Autiomating Empathy” article suggested:
+This temporary solution got me far enough to notice that the API for sending query string, headers, body data, etc. is rather convoluted. I found myself building a params hash from smaller lets as the "Autiomating Empathy” article suggested:
 
 ```ruby
 require 'rails_helper'

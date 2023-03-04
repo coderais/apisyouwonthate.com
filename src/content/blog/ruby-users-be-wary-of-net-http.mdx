@@ -11,7 +11,7 @@ author: Phil Sturgeon
 
 A few months ago we released [We::Call](https://github.com/wework/we-call-gem), a Ruby gem that wraps popular HTTP-client [Faraday](https://github.com/lostisland/faraday/). We::Call aims to configure Faraday with as many best practices for HTTP communications by default as it reasonably can.
 
-It’s come a long way over the last few development versions, most of which revolves around removing the deprecation logic, putting that functionality in a more “Rails-like” gem [rails-sunset](https://github.com/wework/rails-sunset), and removing Rails as a dependency altogether.
+It’s come a long way over the last few development versions, most of which revolves around removing the deprecation logic, putting that functionality in a more "Rails-like” gem [rails-sunset](https://github.com/wework/rails-sunset), and removing Rails as a dependency altogether.
 
 Something else we’ve done, is force the [use of timeouts](https://github.com/wework/we-call-gem#timeouts). If you don’t define a timeout upon creating the connection, We::Call will raise an exception. This had the knock-on effect of demanding the entire dev team to consider timeouts, which has in turn improved performance throughout our architecture. Timeouts are another article entirely, but fail fast, fail often.
 
@@ -78,11 +78,11 @@ We deployed a We::Call v0.7.0-pre1 and lost instrumentation for the rest of the 
 
 #### Typhoeus Is Not Perfect
 
-Things cant always be 100% unicorns. Typheous right now does not seem to distinguish between “open timeout” and “read timeout”, which [for our needs](https://github.com/lostisland/faraday/issues/718#issuecomment-344360416) (and for debugging in general) is very important.
+Things cant always be 100% unicorns. Typheous right now does not seem to distinguish between "open timeout” and "read timeout”, which [for our needs](https://github.com/lostisland/faraday/issues/718#issuecomment-344360416) (and for debugging in general) is very important.
 
 This sucks, but it sucks a whole lot less than having everything mysteriously double up without anyone knowing why.
 
-The Typheous adapter in Faraday ≤ v0.13 is also horrendously out of date, and Typheous bundles their own now. This has been [removed in master](https://github.com/lostisland/faraday/pull/715) (and will be gone in v0.14). The Faraday test suite [runs against the external typheous adapter,](https://github.com/lostisland/faraday/pull/745) thanks to [some help](https://github.com/lostisland/faraday/pull/748) from the Faraday maintainer “iMacTia”.
+The Typheous adapter in Faraday ≤ v0.13 is also horrendously out of date, and Typheous bundles their own now. This has been [removed in master](https://github.com/lostisland/faraday/pull/715) (and will be gone in v0.14). The Faraday test suite [runs against the external typheous adapter,](https://github.com/lostisland/faraday/pull/745) thanks to [some help](https://github.com/lostisland/faraday/pull/748) from the Faraday maintainer "iMacTia”.
 
 All in all the situation is better now than it was, but there are more PRs to send, and more open-sourcing to do!
 
@@ -90,6 +90,6 @@ All in all the situation is better now than it was, but there are more PRs to se
 
 Whatever you do, make sure you’re conscious about Net::HTTP doing this thing, and if it scares you switch to one of those libcurl based adapters!
 
-Also keep this speed difference in mind when considering switching from “traditional” REST or RESTish/RPC HTTP calls. Using a HTTP client that does not handle keep-alive will be much slower than switching to some fancy new tool that does, but that’s a false improvement.
+Also keep this speed difference in mind when considering switching from "traditional” REST or RESTish/RPC HTTP calls. Using a HTTP client that does not handle keep-alive will be much slower than switching to some fancy new tool that does, but that’s a false improvement.
 
 Try to avoid throwing the baby out with the bathwater, and just use a HTTP client that turns keep-alive on for you. Or find one that allows you to turn it on yourself. 👍🏼

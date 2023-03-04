@@ -24,7 +24,7 @@ Step 1 is to Export your Postman Collection.
 ![Open the Postman application, find your API and click Export.](/images/posts/creating-api-specifications-from-bullst/export.png)
 Open the Postman application, find your API and click Export.
 
-There are a lot of “Postman to Swagger” or “Postman to OpenAPI” tools out there, but if you are luck enough to find one that works, it is definitely outdated. Many of them only work wiht Postman Collection v1, and they all only convert to OpenAPI v2.0…
+There are a lot of "Postman to Swagger” or "Postman to OpenAPI” tools out there, but if you are luck enough to find one that works, it is definitely outdated. Many of them only work wiht Postman Collection v1, and they all only convert to OpenAPI v2.0…
 
 The best closest CLI tool out there is API Flow, but even after [sending 7 pull requests](https://github.com/luckymarmot/API-Flow/pulls) that tool is still OpenAPI v2.0 only, and their version is completely broken. Give [my fork](https://github.com/philsturgeon/API-Flow) a try if you are interested.
 
@@ -34,7 +34,7 @@ Their output is not perfect, but it is a start. Run the [Speccy](https://github.
 
 #### Generate from Real Traffic
 
-From a mere chunk of JSON, a “schema generator” can attempt to make a very basic schema for you. If something looks like a string, and maybe contains a date, it can rather easily list the field as`type: string` and `format: date-time`. That might not be mind blowing, and it’s certainly not the most advanced usage of schema, but it is rather useful when you have a whole API with a few thousand fields spread over various resources.
+From a mere chunk of JSON, a "schema generator” can attempt to make a very basic schema for you. If something looks like a string, and maybe contains a date, it can rather easily list the field as`type: string` and `format: date-time`. That might not be mind blowing, and it’s certainly not the most advanced usage of schema, but it is rather useful when you have a whole API with a few thousand fields spread over various resources.
 
 There are a few tools around for OpenAPI and JSON Schema.
 

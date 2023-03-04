@@ -26,11 +26,11 @@ validation](https://apisyouwonthate.com/blog/json-schema-client-side-validation)
 The carrot we’ll be discussing here is contract testing: the art of validating
 the shape of data provided by the API is what you think it is.
 
-Folks are regularly asking “how can we keep our documentation up to date”, and
+Folks are regularly asking "how can we keep our documentation up to date”, and
 we have [covered a few solutions to
 that,](https://apisyouwonthate.com/blog/keeping-documentation-honest)
 one of which is using JSON Schema. Unfortunately thinking of it this way leads
-to responses like “ok greeeeeat, when I have finished spending a week writing up
+to responses like "ok greeeeeat, when I have finished spending a week writing up
 documentation, I get to write a bunch more stuff to ensure its up to date.
 Yaaaay! 🙄”
 
@@ -88,7 +88,7 @@ At this point it is essentially contract testing, but its very laborious, and is
 
 Something else to consider, is that writing these assertions for each field sucks. You want your unit tests to confirm the shape of the response under all sorts of scenarios, but you do not want to copy these lines over and over again. This leads to folks shoving some assertions into the first unit test, then just crossing their fingers that other scenarios output the correct shape. 🤷‍♂️
 
-## JSON Schema for “DRY” Contract Testing
+## JSON Schema for "DRY” Contract Testing
 
 Don’t Repeat Yourself, and define reusable `schemas/components/user.json` files, populated by JSON Schema:
 
@@ -169,7 +169,7 @@ If you need help creating these JSON Schema files, there’s [a few hacks to spe
 
 #### What about Docs?
 
-Often early stage OpenAPI documentation is a lot of paths and maybe some properties, but folks often leave the schemas “until later” (never).
+Often early stage OpenAPI documentation is a lot of paths and maybe some properties, but folks often leave the schemas "until later” (never).
 
 ``` yaml
 responses:

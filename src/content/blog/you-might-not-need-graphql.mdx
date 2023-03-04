@@ -108,9 +108,9 @@ That whole mess of nonsense can be avoided by not versioning your API. As daft a
 
 At a previous company offering crowd-sourced carpooling, we switched from `/matches` to `/riders`, and internally those two representations shared a lot of code. "Matches" was deprecated, and clients started using the new "riders" concept. Over a few months, the internals changed to a much cleaner solution for riders. We eventually dropped the matches endpoint/serializers/logic entirely, without the riders contract changing. That helped us move fast on the code, but keep our contracts relevant for our clients until they didn't need them anymore.
 
-That is not always possible in a rapid-application environment where things change drastically all the time. Startups love their “agile philosophies”, pivots, etc., which can throw evolution out the window. As somebody who has worked for those companies, we would simply make a new API (copy, paste, tweak) and throw the old one out once a new iPhone app was launched and usage dropped below acceptable levels. There was no interest in “keeping the service alive for decades”, which is a core tenant of REST, but that’s ok, we were RESTish.
+That is not always possible in a rapid-application environment where things change drastically all the time. Startups love their "agile philosophies”, pivots, etc., which can throw evolution out the window. As somebody who has worked for those companies, we would simply make a new API (copy, paste, tweak) and throw the old one out once a new iPhone app was launched and usage dropped below acceptable levels. There was no interest in "keeping the service alive for decades”, which is a core tenant of REST, but that’s ok, we were RESTish.
 
-As pointed out in my [GraphQL vs REST: Overview](https://philsturgeon.uk/api/2017/01/24/graphql-vs-rest-overview/) , easily being able to **track field usage by clients** is something that gives GraphQL an edge on most endpoint-based APIs. If a client wants to use field “foo” and you want to remove it, you know that their app will break.
+As pointed out in my [GraphQL vs REST: Overview](https://philsturgeon.uk/api/2017/01/24/graphql-vs-rest-overview/) , easily being able to **track field usage by clients** is something that gives GraphQL an edge on most endpoint-based APIs. If a client wants to use field "foo” and you want to remove it, you know that their app will break.
 
 Earlier in the article, we looked at sparse fieldsets, which can help here. If the endpoint-based API offers sparse fieldsets as an option, and clients use them, there will be trackable insight into which clients are using specific fields just like GraphQL. One downside here is that only clients requesting `?fields=` will be detectable, unless the API goes a step further and requires the use of `?fields=`!
 
@@ -146,7 +146,7 @@ GET /articles?include=author&fields[articles]=title,body&fields[people]=name
 
 That will get you a list of articles with only the title and body fields, then the authors will be included with only their name.
 
-Endpoint-based APIs offering compound documents handle it in a myriad of ways, but again the JSON-API approach is a common one. The JSON-API approach makes some clients sad because data is “side-loaded”, which basically means included resources are jammed into a single array.
+Endpoint-based APIs offering compound documents handle it in a myriad of ways, but again the JSON-API approach is a common one. The JSON-API approach makes some clients sad because data is "side-loaded”, which basically means included resources are jammed into a single array.
 
 Excuse the large JSON blob, but it’s important to understand the concept:
 
@@ -245,7 +245,7 @@ Excuse the large JSON blob, but it’s important to understand the concept:
 }
 ```
 
-That article “1” has two relationship types, `author` and `comment`. These relationships might have one name, and the actual resource type could be another, so author is the relationship name but people is the data type. Cool.
+That article "1” has two relationship types, `author` and `comment`. These relationships might have one name, and the actual resource type could be another, so author is the relationship name but people is the data type. Cool.
 
 So, if they have `"data": { "type": "people", "id": "9" }` and `{ "type": "comments", "id": "5" }, { "type": "comments", "id": "12" }`, that means if `?include=author,comments` is in the query string, it will expand those relationships, "including" the data in the "included" section of the JSON body.
 
@@ -268,6 +268,6 @@ I don’t think people need to spend a huge amount of time trying to make their 
 
 Knowing about these tools and concepts can help people push back against an overzealous switch to a whole new system, because the folks advocating it were unaware that a lot of the concepts used in GraphQL are not entirely new or unique to GraphQL itself.
 
-That said, I do of course think **having all of these concepts implemented and documented in one single “package” like GraphQL is super handy**. GraphQL removes the arguing or confusion about what is “the most RESTful way to do something”, as it has a spec and example implementations.
+That said, I do of course think **having all of these concepts implemented and documented in one single "package” like GraphQL is super handy**. GraphQL removes the arguing or confusion about what is "the most RESTful way to do something”, as it has a spec and example implementations.
 
 A lot of APIs that are merely RESTish could certainly be GraphQL, but an actual REST API with HATEOAS would not make sense trying to jam itself into the GraphQL paradigm. State Transfer and Query Languages are different things, but as I’ve shown, you can blur the lines a little if you’re interested.
