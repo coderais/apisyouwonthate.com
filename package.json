@@ -51,7 +51,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next-sitemap",
+    "build": "node import-jobs.js && next build && next-sitemap",
     "postbuild": "next-sitemap",
     "lint": "next lint",
     "start": "next start",
