@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image';
 
 import {
   Box,
@@ -48,7 +48,6 @@ const BookFeature = ({ book }) => {
           <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
             <Link href={bookUrl} passHref>
               <Button
-                as="a"
                 rounded={'full'}
                 bg={'purple.400'}
                 color={'white'}
@@ -72,9 +71,10 @@ const BookFeature = ({ book }) => {
             objectFit={'cover'}
             priority
             style={{
-              maxWidth: "100%",
-              height: "auto"
-            }} />
+              maxWidth: '100%',
+              height: 'auto',
+            }}
+          />
         </Box>
       </Flex>
     </Stack>

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Link from 'next/link';
-import Image from "next/image";
+import Image from 'next/image';
 
 import { Heading, Stack } from '@chakra-ui/react';
 
@@ -18,13 +18,14 @@ const BlogPostItem = ({ post }) => {
         <Image
           alt={title}
           src={`/images/posts/${coverImage}`}
-          width="400px"
-          height="250px"
-          objectFit={'contain'}
+          width="400"
+          height="250"
           style={{
-            maxWidth: "100%",
-            height: "auto"
-          }} />
+            objectFit: 'contain',
+            maxWidth: '100%',
+            height: 'auto',
+          }}
+        />
       </Link>
       <main>
         <Link href={postUrl} style={{ textDecoration: 'none' }}>

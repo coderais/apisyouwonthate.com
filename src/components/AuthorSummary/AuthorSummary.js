@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Image from "next/image";
+import Image from 'next/image';
 
 import { Box, Button, Heading, Link, Stack, Text } from '@chakra-ui/react';
 
@@ -23,13 +23,14 @@ const AuthorSummary = ({ author }) => {
             <Image
               src={`/images/authors/${photo}`}
               alt={name}
-              width="400px"
-              height="400px"
+              width="400"
+              height="400"
               style={{
-                maxWidth: "100%",
-                height: "auto",
-                objectFit: "cover"
-              }} />
+                maxWidth: '100%',
+                height: 'auto',
+                objectFit: 'cover',
+              }}
+            />
           </Link>
         )}
         <Heading

@@ -3,7 +3,7 @@
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 
-import Image from "next/image";
+import Image from 'next/image';
 import NextLink from 'next/link';
 
 import {
@@ -135,13 +135,15 @@ const NextOptimizedImage = (props) => {
     // eslint-disable-next-line jsx-a11y/alt-text
     return (
       <Image
+        alt=""
         height={1}
         width={1}
         {...props}
         style={{
-          maxWidth: "100%",
-          height: "auto"
-        }} />
+          maxWidth: '100%',
+          height: 'auto',
+        }}
+      />
     );
   }
 
@@ -152,9 +154,10 @@ const NextOptimizedImage = (props) => {
       alt={props?.alt}
       sizes="100vw"
       style={{
-        width: "100%",
-        height: "auto"
-      }} />
+        width: '100%',
+        height: 'auto',
+      }}
+    />
   );
 };
 

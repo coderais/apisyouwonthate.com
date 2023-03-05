@@ -1,6 +1,6 @@
 import { serialize } from 'next-mdx-remote/serialize';
 
-import Image from "next/image";
+import Image from 'next/image';
 
 import { Box, Container, Grid, Heading, Stack, Text } from '@chakra-ui/react';
 import { MDXRemote } from 'next-mdx-remote';
@@ -74,13 +74,14 @@ const BlogPage = ({ post }) => {
                 <Image
                   alt={title}
                   src={postImageUrl}
-                  width="1200px"
-                  height="600px"
+                  width="1200"
+                  height="600"
                   style={{
-                    maxWidth: "100%",
-                    height: "auto",
-                    objectFit: "contain"
-                  }} />
+                    maxWidth: '100%',
+                    height: 'auto',
+                    objectFit: 'contain',
+                  }}
+                />
               </Box>
             ) : (
               <div />

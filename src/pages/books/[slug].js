@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from "next/image";
+import Image from 'next/image';
 
 import {
   Box,
@@ -79,7 +79,6 @@ const BookPage = ({ book }) => {
       {leanpubLinks?.map(({ url, label }, idx) => (
         <Link href={url} key={`leanpub-link-${idx}`} passHref>
           <Button
-            as="a"
             target="_blank"
             rel="noopener noreferrer"
             rounded={'full'}
@@ -104,7 +103,6 @@ const BookPage = ({ book }) => {
           {amazonLinks.map(({ url, label }, idx) => (
             <Link href={url} key={`amazon-link-${idx}`} passHref>
               <Button
-                as="a"
                 target="_blank"
                 rel="noopener noreferrer"
                 rounded={'full'}
@@ -159,9 +157,10 @@ const BookPage = ({ book }) => {
             height="700"
             width={'550'}
             style={{
-              maxWidth: "100%",
-              height: "auto"
-            }} />
+              maxWidth: '100%',
+              height: 'auto',
+            }}
+          />
         </Grid>
       </Container>
 
