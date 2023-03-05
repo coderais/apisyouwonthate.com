@@ -3,7 +3,6 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const slugify = require('slugify');
 const fetch = require('node-fetch');
-const he = require('he');
 
 const TurndownService = require('turndown');
 const turndownService = new TurndownService();

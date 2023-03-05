@@ -19,7 +19,6 @@
     "feed": "^4.2.2",
     "framer-motion": "^6.2.6",
     "gray-matter": "^4.0.3",
-    "he": "^1.2.0",
     "is-valid-email": "^0.0.5",
     "next": "^13.2.3",
     "next-mdx-remote": "4.2.0",
