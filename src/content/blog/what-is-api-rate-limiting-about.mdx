@@ -178,22 +178,17 @@ from processing other jobs. This can happen in languages where sleep sleeps the
 whole process, and that process is running multiple types job on the same
 thread. Don’t back up your whole system with an overzealous sleep!_
 
-Faraday, a Ruby gem I work with often, is [now aware
-of `Retry-After`](https://github.com/lostisland/faraday/pull/773). It uses the
+Faraday, a Ruby gem I work with often, is [now aware of `Retry-After`](https://github.com/lostisland/faraday/pull/773). It uses the
 value to help calculate the interval between retry requests. This can be useful
 for anyone considering implementing rate limiting detection code, even if you
 aren’t a Ruby fan.
 
-To learn _how_ to implement rate limiting, Google it! [Nginx can help
-you](https://www.nginx.com/blog/rate-limiting-nginx/), API Management gateways
+To learn _how_ to implement rate limiting, Google it! [Nginx can help you](https://www.nginx.com/blog/rate-limiting-nginx/), API Management gateways
 like [Kong](https://getkong.org/plugins/rate-limiting/) and
 [Tyk](https://tyk.io/docs/control-limit-traffic/rate-limiting/) do a great job,
 or you can try to implement it at the application level for aaaaallllll of your
-APIs, which is a bit of a pain in the butt. Some frameworks like [Laravel
-(PHP)](https://laravel.com/) support [basic rate limiting out of the
-box](https://laravel-news.com/laravel-5-6-dynamic-rate-limiting), which is
+APIs, which is a bit of a pain in the butt. Some frameworks like [Laravel (PHP)](https://laravel.com/) support [basic rate limiting out of the box](https://laravel-news.com/laravel-5-6-dynamic-rate-limiting), which is
 pretty darn cool.
 
-_All this and more in **[Surviving Other Peoples
-APIs](https://leanpub.com/surviving-other-peoples-web-apis/)**, currently available
+_All this and more in **[Surviving Other Peoples APIs](https://leanpub.com/surviving-other-peoples-web-apis/)**, currently available
 for pre-order, with roughly 80% of the book available for download._

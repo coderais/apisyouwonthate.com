@@ -177,7 +177,7 @@ JSON Hyper-Schema builds on top of URI templates by explaining how to populate t
 
 ### **Populating URI templates with JSON data**
 
-In the href example earlier, JSON Hyper-Schema assumes the {id} variable lines up with the id property in your JSON schema. So our blog post has an id of 5 and our final href would be /posts/5.
+In the href example earlier, JSON Hyper-Schema assumes the `{id}` variable lines up with the id property in your JSON schema. So our blog post has an id of 5 and our final href would be /posts/5.
 
 When all the variables in the template are populated, you check to see if the URI is a relative or absolute URI. Absolute URIs start with a URI scheme, such as http:// and should be considered complete URIs. Relative URIs do not start with a scheme, and should be resolved according to [RFC 3986](https://tools.ietf.org/html/rfc3986#section-5). In this case because our base URI ends with a / and our relative URI does not start with a /, we can simply append the relative URI onto the base, giving us https://api.dashron.com/posts/5.
 
