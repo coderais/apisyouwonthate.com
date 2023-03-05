@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Link from 'next/link';
-import Image from "next/image";
+import Image from 'next/image';
 
 import {
   SimpleGrid,
@@ -59,7 +59,7 @@ const FeaturedBlogPost = ({ post }) => {
           </Link>
         </Stack>
       </Stack>
-      <Link justifySelf="end" href={blogPostUrl}>
+      <Link style={{ justifySelf: 'end' }} href={blogPostUrl}>
         <Box rounded={'md'}>
           <Image
             alt={title}
@@ -67,10 +67,11 @@ const FeaturedBlogPost = ({ post }) => {
             width="800"
             height="420"
             style={{
-              maxWidth: "100%",
-              height: "auto",
-              objectFit: "contain"
-            }} />
+              maxWidth: '100%',
+              height: 'auto',
+              objectFit: 'contain',
+            }}
+          />
         </Box>
       </Link>
     </SimpleGrid>
