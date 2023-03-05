@@ -57,6 +57,7 @@ const VideosPage = ({ videos }) => {
                 maxWidth: '100%',
                 height: 'auto',
               }}
+              priority
             />
             <figcaption>
               A slide from one of Phil&apos;s many talks over the years
