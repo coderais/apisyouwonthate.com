@@ -18,7 +18,13 @@ export async function getContentBySlug(slug, directory, type) {
 
   const articleDate = new Date(data.date);
 
-  const mdxSource = await serialize(content, mdxOptions);
+  let mdxSource = '';
+  try {
+    mdxSource = await serialize(content, mdxOptions);
+  } catch (error) {
+    console.error('Error serializing MDX', error);
+    mdxSource = await serialize('', mdxOptions);
+  }
 
   return {
     slug: realSlug,
