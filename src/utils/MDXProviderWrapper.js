@@ -31,6 +31,9 @@ import Prism from 'prism-react-renderer/prism';
 (typeof global !== 'undefined' ? global : window).Prism = Prism;
 require('prismjs/components/prism-php');
 
+import { Tweet } from '../components/MDXEmbedComponents/Tweet';
+import { YouTube } from '../components/MDXEmbedComponents/YouTube';
+
 const CustomHeading = ({ as, children, id, ...rest }) => {
   if (id) {
     return (
@@ -184,6 +187,8 @@ const components = {
   p: P,
   pre: Pre,
   SimpleGrid,
+  Tweet,
+  YouTube,
 };
 
 // eslint-disable-next-line react/prop-types
