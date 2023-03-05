@@ -20,7 +20,7 @@ export const GeneralObserver = ({ children, onEnter, height = 0 }) => {
     if (ref && ref.current) {
       observer.observe(ref.current);
     }
-  }, [ref]);
+  }, [ref, onEnter]);
 
   return (
     <div ref={ref} data-testid="general-observer" className="mdx-embed">
