@@ -45,7 +45,7 @@ Let’s start with hypermedia associated with the collection representation. Her
 
 This example includes pagination metadata. Pagination limits the items on the current "page” of data, and gives you a way to request the next page. This resource handles pagination via cursors, which you use with the following url
 
-/users?cursor={next_cursor}
+`/users?cursor={next_cursor}`
 
 Instead of exposing cursors and instructing your client how to build that url, I highly recommend you automate the process. Automating the URL generation with JSON Hyper-Schema requires use of the links keyword:
 
