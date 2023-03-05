@@ -63,7 +63,6 @@ const NewsletterForm = () => {
         } else {
           setIsSubmitting(false);
           const b = await res.json();
-          debugger;
           setFormResponse({
             status: 'ERROR',
             message: b.message,
