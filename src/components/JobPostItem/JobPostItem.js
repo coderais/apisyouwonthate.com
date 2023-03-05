@@ -20,9 +20,7 @@ const JobPostItem = ({ job }) => {
         {company} &middot; {title}
       </Heading>
       <Link href={jobUrl} passHref>
-        <Button as="a" rel="nofollow">
-          Find out more
-        </Button>
+        <Button rel="nofollow">Find out more</Button>
       </Link>
     </Stack>
   );

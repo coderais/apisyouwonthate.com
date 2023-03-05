@@ -92,7 +92,6 @@ const IndexPage = ({ books, posts }) => {
             })}
             <Link href="/blog" passHref>
               <Text
-                as="a"
                 color="green.700"
                 fontWeight={'bold'}
                 _hover={{ color: 'green.400' }}
