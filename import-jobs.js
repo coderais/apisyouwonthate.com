@@ -3,6 +3,7 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const slugify = require('slugify');
 const fetch = require('node-fetch');
+const he = require('he');
 
 const TurndownService = require('turndown');
 const turndownService = new TurndownService();
@@ -36,18 +37,18 @@ const getJobs = async () => {
       frontmatter: {
         ...rest,
         id: job.id,
-        title: job.title,
-        company: job.company_name,
-        salary: job.salary,
+        title: he.encode(job.title),
+        company: he.encode(job.company_name),
+        salary: he.encode(job.salary),
         currency: '',
         employment_type: normalizeJobType[job.job_type] || 'Unknown',
-        location: job.candidate_required_location || 'Anywhere',
-        date: job.publication_date,
+        location: he.encode(job.candidate_required_location) || 'Anywhere',
+        date: he.encode(job.publication_date),
         type: 'jobs',
         url: job.url,
         published: true,
       },
-      description: job.description,
+      description: he.encode(job.description),
     };
   });
 };
