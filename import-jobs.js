@@ -8,7 +8,7 @@ const he = require('he');
 const TurndownService = require('turndown');
 const turndownService = new TurndownService();
 
-const remotiveApiHost = 'https://remotive.io/api';
+const remotiveApiHost = 'https://remotive.com/api';
 const category = 'software-dev';
 const search = 'api';
 const jobsFolder = join(process.cwd(), '.jobs');
@@ -37,18 +37,18 @@ const getJobs = async () => {
       frontmatter: {
         ...rest,
         id: job.id,
-        title: he.encode(job.title),
-        company: he.encode(job.company_name),
-        salary: he.encode(job.salary),
+        title: job.title,
+        company: job.company_name,
+        salary: job.salary,
         currency: '',
         employment_type: normalizeJobType[job.job_type] || 'Unknown',
-        location: he.encode(job.candidate_required_location) || 'Anywhere',
-        date: he.encode(job.publication_date),
+        location: job.candidate_required_location || 'Anywhere',
+        date: job.publication_date,
         type: 'jobs',
         url: job.url,
         published: true,
       },
-      description: he.encode(job.description),
+      description: job.description,
     };
   });
 };
