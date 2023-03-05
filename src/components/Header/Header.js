@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from "next/image";
+import Image from 'next/image';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -25,9 +25,10 @@ const Header = () => {
               width="130px"
               height="60px"
               style={{
-                maxWidth: "100%",
-                height: "auto"
-              }} />
+                maxWidth: '100%',
+                height: 'auto',
+              }}
+            />
           </Link>
           <Stack
             as="nav"

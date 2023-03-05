@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image';
 
 import {
   Container,
@@ -54,9 +54,10 @@ const VideosPage = ({ videos }) => {
               src={videoHeaderImage}
               alt="A slide from one of Phil's many talks over the years"
               style={{
-                maxWidth: "100%",
-                height: "auto"
-              }} />
+                maxWidth: '100%',
+                height: 'auto',
+              }}
+            />
             <figcaption>
               A slide from one of Phil&apos;s many talks over the years
             </figcaption>
