@@ -99,6 +99,10 @@ const AuthorPage = ({ author, posts }) => {
                 height="300"
                 width="300"
                 alt={`${name} headshot`}
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto',
+                }}
               />
               {consultingUrl && (
                 <Button>

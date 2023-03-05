@@ -13,7 +13,7 @@ import {
   Input,
   Text,
   Stack,
-  useTheme
+  useTheme,
 } from '@chakra-ui/react';
 
 import isValidEmail from 'is-valid-email';
@@ -63,7 +63,6 @@ const NewsletterForm = () => {
         } else {
           setIsSubmitting(false);
           const b = await res.json();
-          debugger;
           setFormResponse({
             status: 'ERROR',
             message: b.message,
@@ -85,7 +84,7 @@ const NewsletterForm = () => {
       </Stack>
     );
   }
-// _hover={{ bgColor: `${theme.colors.green[400]}`}}
+  // _hover={{ bgColor: `${theme.colors.green[400]}`}}
   return (
     <Stack>
       <Flex gap={4} wrap={['wrap', 'nowrap', 'nowrap']}>

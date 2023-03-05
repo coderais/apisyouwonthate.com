@@ -74,9 +74,13 @@ const BlogPage = ({ post }) => {
                 <Image
                   alt={title}
                   src={postImageUrl}
-                  width="1200px"
-                  height="600px"
-                  objectFit="contain"
+                  width="1200"
+                  height="600"
+                  style={{
+                    maxWidth: '100%',
+                    height: 'auto',
+                    objectFit: 'contain',
+                  }}
                 />
               </Box>
             ) : (

@@ -125,10 +125,8 @@ That’s hard to wrap your head around for a good reason. Let’s see how it mig
 work:
 
 The latest "fetch all" for companies might be`GET /api/v2/companies`, but to
-create a company you might `POST /api/v3/companies`, even though `GET
-/api/v3/companies` does not exist. The resource is not even guaranteed to match
-on the same method, as method + URI is what makes it unique, so `GET
-/api/v1/companies/{id}` might be the best way to grab a single resource, and who
+create a company you might `POST /api/v3/companies`, even though `GET/api/v3/companies` does not exist. The resource is not even guaranteed to match
+on the same method, as method + URI is what makes it unique, so `GET/api/v1/companies/{id}` might be the best way to grab a single resource, and who
 _knows_ if those serializers are the same.
 
 This has all of the cons of the previously mentioned solutions, with a few more

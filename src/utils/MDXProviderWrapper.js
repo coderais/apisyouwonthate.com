@@ -2,7 +2,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { MDXEmbedProvider } from 'mdx-embed';
 
 import Image from 'next/image';
 import NextLink from 'next/link';
@@ -32,6 +31,9 @@ import Prism from 'prism-react-renderer/prism';
 (typeof global !== 'undefined' ? global : window).Prism = Prism;
 require('prismjs/components/prism-php');
 
+import { Tweet } from '../components/MDXEmbedComponents/Tweet';
+import { YouTube } from '../components/MDXEmbedComponents/YouTube';
+
 const CustomHeading = ({ as, children, id, ...rest }) => {
   if (id) {
     return (
@@ -49,9 +51,7 @@ const CustomHeading = ({ as, children, id, ...rest }) => {
           },
         }}
       >
-        <NextLink href={`#${id}`}>
-          <a>{children}</a>
-        </NextLink>
+        <NextLink href={`#${id}`}>{children}</NextLink>
       </Heading>
     );
   }
@@ -136,11 +136,31 @@ const NextOptimizedImage = (props) => {
 
   if (src.startsWith('https://remotive.com/job/track')) {
     // eslint-disable-next-line jsx-a11y/alt-text
-    return <Image height={1} width={1} {...props} />;
+    return (
+      <Image
+        alt=""
+        height={1}
+        width={1}
+        {...props}
+        style={{
+          maxWidth: '100%',
+          height: 'auto',
+        }}
+      />
+    );
   }
 
   return (
-    <Image {...props} layout="responsive" loading="lazy" alt={props?.alt} />
+    <Image
+      {...props}
+      loading="lazy"
+      alt={props?.alt}
+      sizes="100vw"
+      style={{
+        width: '100%',
+        height: 'auto',
+      }}
+    />
   );
 };
 
@@ -167,13 +187,13 @@ const components = {
   p: P,
   pre: Pre,
   SimpleGrid,
+  Tweet,
+  YouTube,
 };
 
 // eslint-disable-next-line react/prop-types
 const MDXProviderWrapper = ({ children }) => (
-  <MDXEmbedProvider>
-    <MDXProvider components={components}>{children}</MDXProvider>
-  </MDXEmbedProvider>
+  <MDXProvider components={components}>{children}</MDXProvider>
 );
 
 export default MDXProviderWrapper;

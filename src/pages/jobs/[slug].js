@@ -12,6 +12,7 @@ import { MDXRemote } from 'next-mdx-remote';
 import { Layout, Overline, Seo } from '../../components';
 
 import { getJobBySlug, getAllJobs } from '../../lib/jobLoader';
+import ErrorBoundary from '../../components/ErrorBoundary';
 
 export async function getStaticProps({ params }) {
   const job = await getJobBySlug(params.slug);
@@ -58,23 +59,23 @@ const JobPage = ({ job }) => {
             {company} &middot; {title}
           </Heading>
 
-          <MDXRemote {...job.source} />
+          <ErrorBoundary>
+            <MDXRemote {...job.source} />
+          </ErrorBoundary>
 
           <Spacer />
 
           <SimpleGrid minChildWidth={'200px'} spacing={8}>
             {contact && (
               <Link href={`mailto:${contact}`} passHref>
-                <Button variant={'link'} as="a" colorScheme={'purple'}>
+                <Button variant={'link'} colorScheme={'purple'}>
                   Contact
                 </Button>
               </Link>
             )}
             {url && (
               <Link href={url} passHref>
-                <Button as="a" colorScheme={'purple'}>
-                  Apply Now
-                </Button>
+                <Button colorScheme={'purple'}>Apply Now</Button>
               </Link>
             )}
           </SimpleGrid>

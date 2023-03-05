@@ -23,9 +23,13 @@ const AuthorSummary = ({ author }) => {
             <Image
               src={`/images/authors/${photo}`}
               alt={name}
-              width="400px"
-              height="400px"
-              objectFit="cover"
+              width="400"
+              height="400"
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+                objectFit: 'cover',
+              }}
             />
           </Link>
         )}

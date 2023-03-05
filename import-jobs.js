@@ -7,7 +7,7 @@ const fetch = require('node-fetch');
 const TurndownService = require('turndown');
 const turndownService = new TurndownService();
 
-const remotiveApiHost = 'https://remotive.io/api';
+const remotiveApiHost = 'https://remotive.com/api';
 const category = 'software-dev';
 const search = 'api';
 const jobsFolder = join(process.cwd(), '.jobs');

@@ -22,9 +22,7 @@ const PodcastPage = () => {
               show, and we&apos;ll do our best to answer on an upcoming episode.
             </p>
             <Link href="/ama" passHref>
-              <Button as="a" colorScheme={'purple'}>
-                Ask us a question
-              </Button>
+              <Button colorScheme={'purple'}>Ask us a question</Button>
             </Link>
           </Stack>
         </Grid>

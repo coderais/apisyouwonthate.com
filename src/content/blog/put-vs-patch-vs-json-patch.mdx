@@ -92,7 +92,7 @@ send the fields we intend to update, and anything else is left alone.
 
 Let’s just assume we’re using [JSON-API](https://jsonapi.org//) and building
 something for a carpooling company, like [Ride](https://ride.com/). We want to
-be able to “start” a trip, by changing the status from `"pending"` to
+be able to "start” a trip, by changing the status from `"pending"` to
 `"in_progress"`.
 
 In v1.0, we used to use `PUT`. It worked something like this:
@@ -222,7 +222,7 @@ around, Unfortunately the #WellActually starts to get pretty heavy.
 
 One of the most prolific articles out there on using PATCH is from [William
 Durand](https://williamdurand.fr/2014/02/14/please-do-not-patch-like-an-idiot/).
-It’s a great technical article, but the assertions of “do this really
+It’s a great technical article, but the assertions of "do this really
 complicated thing which you might not need or you’re Doing It Wrong” do rub me
 up the wrong way a bit. Read this article, consider implementing it, and if you
 don’t want it, don’t do it. You’re fine.
@@ -231,7 +231,7 @@ Yes, [JSON PATCH is lovely](https://www.mnot.net/blog/2012/09/05/patch), and you
 might need it for your API, but it also might be a complication you don’t need
 to worry about, depending on the complexity of your actions
 [JSON-API](https://jsonapi.org//) previously recommend using JSON PATCH, but since
-settled on the “just send what you need” approach instead. Something very
+settled on the "just send what you need” approach instead. Something very
 similar to the "just send what you need" approach has been standardised as [RFC
 7396: JSON Merge Patch](https://tools.ietf.org/html/rfc7396).
 

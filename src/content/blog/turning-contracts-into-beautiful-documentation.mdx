@@ -30,8 +30,8 @@ Looking at Swagger UI, it’s clear that it was designed by a developer, and als
 
 Documenting an API as purely HTTP requests with the actual objects being hidden away as an afterthought is entirely backwards for a REST API. These tools promote RPC thinking in APIs that have Hypermedia and it’s just propagating the problem.
 
-![Trying to find the object is hidden under “model” and it looks really bad.](/images/posts/turning-contracts-into-beautiful-documentation/200-code.png)
-Trying to find the object is hidden under “model” and it looks really bad.
+![Trying to find the object is hidden under "model” and it looks really bad.](/images/posts/turning-contracts-into-beautiful-documentation/200-code.png)
+Trying to find the object is hidden under "model” and it looks really bad.
 
 Whilst having docs is better than not having docs (people will just [guess the contracts](https://apisyouwonthate.com/blog/commit-to-api-contracts) and RPC your REST API anyway), you don’t want to use a doc tool that really seems to suggest you completely ignore Hypermedia entirely.
 
@@ -54,17 +54,17 @@ With an obvious install (npm/yarn install) you get a simple CLI tool that conver
 
 Spectacle splits the logic into two different sections, Operations and Schema Definitions. Operations give it the usual RPC-ish explanation you’re probably used to, and Schema Definitions is dedicated to outlining objects and their properties.
 
-Whilst this isn’t as 100% HATEOAStastic as some would like, this is a big step towards highlighting the importance of the objects instead of “lets just fire these fields at this endpoint” RPC thinking.
+Whilst this isn’t as 100% HATEOAStastic as some would like, this is a big step towards highlighting the importance of the objects instead of "lets just fire these fields at this endpoint” RPC thinking.
 
 In general I’m a fan, but there are a few small downsides noticed from my experiments.
 
 The enum output is bit weird, with lines looking like:
 
-**status:** _string_  , x ∈ { available , pending , sold }
+**status:** _string_  , `x ∈ { available , pending , sold }`
 
 I’m no designer so I really don’t mean to belittle anyone, but… I’d have asked a friend to help me instead of doing that.
 
-Also despite having the objects linked in there (under request and response will be a “Cheese” link), it’s not particularly clear, and if Object A embeds Object B, that’s not made clear in the example. Some systems will annotate the JSON Example with more details, such as…
+Also despite having the objects linked in there (under request and response will be a "Cheese” link), it’s not particularly clear, and if Object A embeds Object B, that’s not made clear in the example. Some systems will annotate the JSON Example with more details, such as…
 
 #### [ReDoc](https://github.com/Rebilly/ReDoc/)
 
@@ -73,7 +73,7 @@ By far my favourite of the lot, ReDoc just looks absolutely stunning. You can ad
 ![Fancy/modern looking three-col API documentation from OpenAPI](/images/posts/turning-contracts-into-beautiful-documentation/pet-store.png)
 Fancy/modern looking three-col API documentation from OpenAPI
 
-The “data structures” unfortunately don’t live in their own navigation section like Spectacle, but they are fantastic to look at.
+The "data structures” unfortunately don’t live in their own navigation section like Spectacle, but they are fantastic to look at.
 
 ![Animation of category docs from a CLI tool](/images/posts/turning-contracts-into-beautiful-documentation/category.gif)
 

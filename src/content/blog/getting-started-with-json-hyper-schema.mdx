@@ -95,7 +95,7 @@ Once your API consumers have a JSON schema, they can use one of the many [JSON S
 
 ## **JSON Hyper-Schema**
 
-Now that we have a foundation of JSON Schema, let’s add the “Hyper” part. JSON Schema was built with expansion in mind, via a system called vocabularies. The spec defines this well, so here’s a quote.
+Now that we have a foundation of JSON Schema, let’s add the "Hyper” part. JSON Schema was built with expansion in mind, via a system called vocabularies. The spec defines this well, so here’s a quote.
 > A JSON Schema vocabulary is a set of keywords defined for a particular purpose.
 
 [JSON schema [Section] 4.3.2](https://tools.ietf.org/html/draft-handrews-json-schema-00#section-4.3.2)
@@ -177,7 +177,7 @@ JSON Hyper-Schema builds on top of URI templates by explaining how to populate t
 
 ### **Populating URI templates with JSON data**
 
-In the href example earlier, JSON Hyper-Schema assumes the {id} variable lines up with the id property in your JSON schema. So our blog post has an id of 5 and our final href would be /posts/5.
+In the href example earlier, JSON Hyper-Schema assumes the `{id}` variable lines up with the id property in your JSON schema. So our blog post has an id of 5 and our final href would be /posts/5.
 
 When all the variables in the template are populated, you check to see if the URI is a relative or absolute URI. Absolute URIs start with a URI scheme, such as http:// and should be considered complete URIs. Relative URIs do not start with a scheme, and should be resolved according to [RFC 3986](https://tools.ietf.org/html/rfc3986#section-5). In this case because our base URI ends with a / and our relative URI does not start with a /, we can simply append the relative URI onto the base, giving us https://api.dashron.com/posts/5.
 

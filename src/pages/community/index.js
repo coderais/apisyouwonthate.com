@@ -31,7 +31,6 @@ const CommunityPage = () => (
 
           <Button
             colorScheme="purple"
-            as="a"
             href="https://slack.apisyouwonthate.com"
             target="_blank"
             rel="noreferrer noopener"
@@ -39,7 +38,14 @@ const CommunityPage = () => (
             Join us in Slack
           </Button>
         </Stack>
-        <Image src={slackImage} alt="Our slack community" />
+        <Image
+          src={slackImage}
+          alt="Our slack community"
+          style={{
+            maxWidth: '100%',
+            height: 'auto',
+          }}
+        />
       </Grid>
     </Container>
   </Layout>

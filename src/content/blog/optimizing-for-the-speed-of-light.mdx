@@ -27,9 +27,9 @@ Over the years, massively increased hardware capacity and clever engineering opt
 
 ### Solutions to unnatural problems
 
-In order to work around the connection limit, it has become a best practice in the web world to “bundle” resources together to allow retrieving a set of resources in a single request. Clever tooling has evolved to make the bundling process almost automatic. **Few people question why it is being done**.
+In order to work around the connection limit, it has become a best practice in the web world to "bundle” resources together to allow retrieving a set of resources in a single request. Clever tooling has evolved to make the bundling process almost automatic. **Few people question why it is being done**.
 
-The same mantra of “minimizing round trips” has become a best practice of the HTTP API world with a slight twist. Instead of the server creating bundles of content for the client to consume, **the client aggregates a set of requests into a single request** and the server splits that request, collects the data and creates a custom aggregated response. The client can then tear apart the composed result into the component parts. Some APIs present this as a kind of “batch request”, others in a form of query language against an aggregated server side data model.
+The same mantra of "minimizing round trips” has become a best practice of the HTTP API world with a slight twist. Instead of the server creating bundles of content for the client to consume, **the client aggregates a set of requests into a single request** and the server splits that request, collects the data and creates a custom aggregated response. The client can then tear apart the composed result into the component parts. Some APIs present this as a kind of "batch request”, others in a form of query language against an aggregated server side data model.
 
 ### Knobs and switches
 
@@ -49,7 +49,7 @@ Maybe we want to render the results to a user interface. Should we need to wait 
 
 There is another industry mantra that is very useful here:
 
-“The fastest round-trip is no round trip”.
+"The fastest round-trip is no round trip”.
 
 ![No U turns here](/images/posts/optimizing-for-the-speed-of-light/no-u-turn.png)
 

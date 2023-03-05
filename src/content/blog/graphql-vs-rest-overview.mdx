@@ -66,6 +66,7 @@ If we were talking about uploading videos or other large files, I would (as [thi
 
 This is the approach you are forced to take with GraphQL, because you can only speak to GraphQL in terms of fields:
 
+```
 POST /graphql HTTP/1.1
 Host: localhost:3000
 Content-Type: application/graphql
@@ -76,6 +77,7 @@ mutation addAvatar {
     image_url
   }
 }
+```
 
 Some will argue that this is more "clean", and it is, it’s very clean, but being forced to create another service is overkill for smaller images, especially early on. Another approach is to upload directly to Amazon S3, forcing a dependency on clients and potentially letting your tokens leak, or… use multipart uploads, which are a super hacky approach that depends on if the server and various clients can even support it.
 

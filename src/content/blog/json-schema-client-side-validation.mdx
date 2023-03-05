@@ -168,8 +168,7 @@ incorrect format.
 
 Conceptually that probably makes enough sense, but how to actually
 programmatically get this done? The JSON Schema `.json` files are usually made
-available somewhere in a HTTP Link header with a rel of "describedby". `Link:
-<http://example.com/schemas/user.json#>; rel="describedby"`. This might look a
+available somewhere in a HTTP Link header with a rel of "describedby".  `Link: <http://example.com/schemas/user.json#>; rel="describedby"`. This might look a
 bit off to those not used to Link headers, but this is how a lot of links are
 handled these days. The one difficulty here is parsing the value, which can be
 done with some extremely awful regex, or with a

@@ -53,6 +53,11 @@ const VideosPage = ({ videos }) => {
             <Image
               src={videoHeaderImage}
               alt="A slide from one of Phil's many talks over the years"
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
+              priority
             />
             <figcaption>
               A slide from one of Phil&apos;s many talks over the years

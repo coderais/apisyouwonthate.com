@@ -19,35 +19,28 @@ const Header = () => {
           justifyContent="space-between"
         >
           <Link href="/">
-            <a>
-              <Image
-                src={logo}
-                alt="APIs You Won't Hate"
-                width="130px"
-                height="60px"
-              />
-            </a>
+            <Image
+              src={logo}
+              alt="APIs You Won't Hate"
+              width="130px"
+              height="60px"
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
+            />
           </Link>
           <Stack
             as="nav"
             direction={['column', 'row']}
             alignItems={['flex-start', 'center']}
           >
-            <Link href="/blog">
-              <a>Blog</a>
-            </Link>
-            <Link href="/books">
-              <a>Books</a>
-            </Link>
-            <Link href="/jobs">
-              <a>Jobs</a>
-            </Link>
-            <Link href="/podcast">
-              <a>Podcast</a>
-            </Link>
+            <Link href="/blog">Blog</Link>
+            <Link href="/books">Books</Link>
+            <Link href="/jobs">Jobs</Link>
+            <Link href="/podcast">Podcast</Link>
             <Link href="/community" passHref>
               <Button
-                as="a"
                 colorScheme={'purple'}
                 rounded={'full'}
                 _hover={{ bgColor: 'purple.400' }}
