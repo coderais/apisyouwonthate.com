@@ -1,4 +1,4 @@
-import { getPadding } from './getPadding';
+import { getPadding } from './utils';
 import { GeneralObserver } from './generalObserver';
 
 export const YouTube = ({

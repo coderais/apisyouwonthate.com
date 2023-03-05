@@ -1,5 +1,19 @@
-import React, { FunctionComponent } from 'react';
 import { GeneralObserver } from './generalObserver';
+import { createScriptTag } from './utils';
+
+const twttrEmbedScript = `
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs")
+`;
+
+const twttrLoad = () => {
+  if (
+    typeof window.twttr !== `undefined` &&
+    window.twttr.widgets &&
+    typeof window.twttr.widgets.load === `function`
+  ) {
+    window.twttr.widgets.load(document.getElementsByClassName(`mdx-embed`));
+  }
+};
 
 const handleTwttrLoad = () => {
   if (!window.twttr) {
@@ -33,7 +47,7 @@ export const Tweet = ({
         data-align={align}
         data-conversation={hideConversation ? 'none' : ''}
       >
-        <a href={`https://twitter.com/${tweetLink}?ref_src=twsrc%5Etfw`}>
+        <a href={`https://twitter.com/${tweetLink}`}>
           {typeof window !== 'undefined' && !window.twttr ? 'Loading' : ''}
         </a>
       </blockquote>
