@@ -1,0 +1,87 @@
+---
+title: Securing APIs with the Spectral OWASP Ruleset
+subtitle: Scan your OpenAPI descriptions to see if your API is falling into any of the top 10 API security pitfalls as defined by OWASP.
+date: "2023-03-07"
+coverImage: securing-apis-with-spectral-owasp-ruleset/cover.jpg
+type: blog
+author: Phil Sturgeon
+---
+
+Recently I've been on a run of making new all powerful Spectral rulesets, but so far it's been focused on the concept of automating style guides, with the concrete example of the [APIs You Won't Hate: API Style Guide](https://github.com/apisyouwonthate/style-guide) showing how it can be done with NPM and tested with Jest. Here's for a new idea though: instead of just making sure you match an organizations style guide, let's look for security issues! 
+
+If you're new to the topic of API security there's a lot of good content around. One of the best places to start looking is the [OWSAP API Security Project](https://owasp.org/www-project-api-security/), where they have the top 10 biggest security threats in the field, last updated in 2019. 
+
+I've gone through all the guidance and rules, and put a bunch of Spectral rules together in the [Spectral OWASP Ruleset](https://github.com/stoplightio/spectral-owasp-ruleset), which is once again available via [NPM](https://www.npmjs.com/package/@stoplight/spectral-owasp-ruleset), or [via Stoplight Platform](https://apistylebook.stoplight.io/docs/owasp-top-10/branches/main) if you're using their fancy new [integrated Style Guide](https://docs.stoplight.io/docs/platform/71b92b2b5e388-style-guide-overview) functionality.
+
+The way this works is by looking at your OpenAPI, and seeing if anything clearly wrong is going on, which has pros and cons. There's loads of things OpenAPI doesn't cover, like "Received payload is blindly transformed into an object and stored." or "Unpatched systems" because we can't look to see what the code is doing, and we can't make any judgement calls on the quality of your web servers configuration or versions. Other software exists for all of those concerns, so instead we're just focusing on what we can see. 
+
+For example, are there any rate limiting headers defined? Let's have a look inside that sausage:
+
+```ts
+  "owasp:api4:2019-rate-limit": {
+    message: "All 2XX and 4XX responses should define rate limiting headers.",
+    description: "Define proper rate limiting to avoid attackers overloading the API. There are many ways to implement rate-limiting, but most of them involve using HTTP headers, and there are two popular ways to do that:\n\nIETF Draft HTTP RateLimit Headers: https://datatracker.ietf.org/doc/draft-ietf-httpapi-ratelimit-headers/\n\nCustomer headers like X-Rate-Limit-Limit (Twitter: https://developer.twitter.com/en/docs/twitter-api/rate-limits) or X-RateLimit-Limit (GitHub: https://docs.github.com/en/rest/overview/resources-in-the-rest-api)",
+    formats: [oas3],
+    given: "$.paths[*]..responses[?(@property.match(/^(2|4)/))]",
+    then: {
+      field: 'headers',
+      function: schema,
+      functionOptions: {
+        schema: {
+          type: 'object',
+          oneOf: [
+            {
+              required: ['RateLimit-Limit', 'RateLimit-Reset'],
+            },
+            {
+              required: ['X-RateLimit-Limit'],
+            },
+            {
+              required: ['X-Rate-Limit-Limit'],
+            },
+          ],
+        }
+      }
+    },
+    severity: DiagnosticSeverity.Error,
+  },
+```
+
+This rule is one of the best I've ever written. It's using some pretty hardcore JSON Path to look at 2XX and 4XX responses (because maybe lets not worry about rate limiting redirects?) then uses JSON Schema decide what combinations of headers are acceptable on that responses headers object. Phwar. 
+
+Whether you've used the [IETF RateLimit Header Fields draft RFC](https://datatracker.ietf.org/doc/draft-ietf-httpapi-ratelimit-headers/\n\nCustomer), or copied the Twitter or GitHub ways of rate limiting, this rule is A-okay with it. If you went off and did some totally custom approach to rate limiting then you can turn this rule off or override it to train it to your unique approach, ooooor you could change to use something more standard so everyone isn't massively confused. [Yay standards](https://standards.rest)! 
+
+Another rule written by Stoplight CTO Jason Harmon nicely requests that you add data validation defintions, because a broken validation response could be leaking backtraces, or implementation details. This rule forces you to define what a validation response should look like, so that then any [OpenAPI-based contract validation](https://apisyouwonthate.com/blog/writing-documentation-via-contract-testing) approach you use will be able to spot the different between your nicely defined "this is what it should look like", and the broken nonsense the API is actually doing. 
+
+```ts
+  "owasp:api3:2019-define-error-validation": {
+    message: "Missing error validation response of either 400 or 422.",
+    description: "Carefully define schemas for all the API responses, including either 400 or 422 responses which describe errors caused by invalid requests.",
+    severity: DiagnosticSeverity.Warning,
+    given: "$.paths..responses",
+    then: [
+      {
+        function: schema,
+        functionOptions: {
+          schema: {
+            type: 'object',
+            oneOf: [
+              {
+                required: ['400'],
+              },
+              {
+                required: ['422'],
+              },
+            ],
+          }
+        }
+      },
+    ],
+  },
+```
+
+There's also the benefit of improving the quality of your documentation by reminding you to document the unhappy path as well as the happy path. Win win. 
+
+This OWASP ruleset has a bunch of other security rules, and as its entirely open-source we can all work on it together. There's issues to [enforce CORS](https://github.com/stoplightio/spectral-owasp-ruleset/issues/5), make sure there's [no backtraces in the errors](https://github.com/stoplightio/spectral-owasp-ruleset/issues/12), and to check theres [no PII in responses](https://github.com/stoplightio/spectral-owasp-ruleset/issues/3). 
+
+If you want to get involved but need some help, check out the last few articles in the series covering [Distributing Spectral Style Guides](https://apisyouwonthate.com/blog/distribute-spectral-style-guides-with-npm#publish-your-spectral-style-guide-to-npm) and [Testing Spectral Style Guides with Jest](https://apisyouwonthate.com/blog/testing-spectral-style-guides-with-jest) then check out the [Spectral Custom Ruleset documentation](https://meta.stoplight.io/docs/spectral/ZG9jOjI1MTg5-custom-rulesets).
