@@ -81,3 +81,8 @@ yarn-error.log
 
 # Next.js files
 .next
+
+
+# ghost migration file
+.ghost
+.ghost/*
